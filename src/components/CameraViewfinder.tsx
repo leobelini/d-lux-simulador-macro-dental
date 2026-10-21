@@ -63,6 +63,9 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
           <span className="px-1.5 py-0.5 rounded bg-[#232733] text-emerald-400 font-bold text-[10px] tracking-wider">
             LIVE 1:1
           </span>
+          <span className="px-1.5 py-0.5 rounded bg-amber-400/15 text-amber-300 border border-amber-400/30 font-bold text-[9px] tracking-wider">
+            THREE.JS 3D
+          </span>
           <span className="text-zinc-400 text-[11px] hidden sm:inline">MACRO INTRAORAL</span>
           <span className="text-zinc-600 hidden sm:inline">|</span>
           <span className="text-zinc-300 font-semibold text-[11px]">
@@ -153,6 +156,7 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
         {/* Dental Subject Canvas */}
         <DentalSubjectCanvas
           focalLength={settings.focalLength}
+          aperture={settings.aperture}
           dofBlurCaninesPx={diagnostics.dofBlurCaninesPx}
           motionBlurPx={diagnostics.blurAmountPx}
           noiseOpacity={diagnostics.noiseOpacity}

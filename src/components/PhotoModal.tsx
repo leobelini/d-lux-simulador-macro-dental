@@ -49,6 +49,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
           <div className="relative flex-1 bg-black flex items-center justify-center min-h-[300px] p-2 border-b md:border-b-0 md:border-r border-zinc-800">
             <DentalSubjectCanvas
               focalLength={settings.focalLength}
+              aperture={settings.aperture}
               dofBlurCaninesPx={diagnostics.dofBlurCaninesPx}
               motionBlurPx={diagnostics.blurAmountPx}
               noiseOpacity={diagnostics.noiseOpacity}

@@ -81,12 +81,12 @@ npm run preview
 ---
 
 ## 🛠️ Tecnologias Utilizadas
+- **Three.js** (Renderização WebGL 3D em tempo real com materiais PBR de esmalte dental)
 - **Astro 5**
 - **React 19**
 - **Tailwind CSS v4**
 - **Lucide Icons**
 - **Web Audio API** (Sons mecânicos sintetizados em tempo real de obturador e catraca)
-- **Canvas Confetti**
 
 ---
 
