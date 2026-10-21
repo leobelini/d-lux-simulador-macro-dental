@@ -22,26 +22,26 @@ export const ClinicalFeedback: React.FC<ClinicalFeedbackProps> = ({ diagnostics 
   return (
     <div className="bg-[#16181f] border border-[#272a36] rounded-xl p-3 flex flex-col gap-2 shadow-sm">
       {/* Top Line: Score + Status + Title */}
-      <div className="flex items-center justify-between gap-3 flex-wrap sm:flex-nowrap">
-        <div className="flex items-center gap-2.5">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex items-center gap-2 min-w-0">
           {/* Numerical Score Box */}
-          <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md border font-mono text-xs font-bold ${scoreBadgeStyle}`}>
+          <div className={`flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md border font-mono text-xs font-bold shrink-0 ${scoreBadgeStyle}`}>
             <span className={`w-2 h-2 rounded-full ${scoreDotColor}`}></span>
             <span>{clinicalScore}/100</span>
-            <span className="text-[10px] uppercase tracking-wider font-semibold opacity-80">
-              {clinicalScore >= 80 ? 'Padrão Clínico' : clinicalScore >= 50 ? 'Atenção' : 'Falha Crítica'}
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-semibold opacity-80">
+              {clinicalScore >= 80 ? 'Padrão' : clinicalScore >= 50 ? 'Atenção' : 'Falha'}
             </span>
           </div>
 
           {/* Title */}
-          <h4 className="text-xs font-bold text-zinc-100 truncate">
+          <h4 className="text-[11px] sm:text-xs font-bold text-zinc-100 truncate">
             {clinicalTitle}
           </h4>
         </div>
 
         {/* EV / Exposure Pill */}
-        <div className="text-[11px] font-mono text-zinc-400 shrink-0">
-          <span className="text-zinc-500">Exposição: </span>
+        <div className="text-[10px] sm:text-[11px] font-mono text-zinc-400 shrink-0">
+          <span className="text-zinc-500">Exp: </span>
           <span
             className={`font-semibold ${
               exposureStatus === 'good'

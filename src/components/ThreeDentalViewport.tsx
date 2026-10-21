@@ -599,7 +599,7 @@ export const ThreeDentalViewport: React.FC<ThreeDentalViewportProps> = ({
     centerFill.position.set(0, 0, 4.8);
     lightsGroup.add(centerFill);
 
-    // Mouse tilt tracking
+    // Mouse & Touch tilt tracking
     const handleMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -613,8 +613,26 @@ export const ThreeDentalViewport: React.FC<ThreeDentalViewportProps> = ({
       mouseRef.current.targetY = 0;
     };
 
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        const rect = container.getBoundingClientRect();
+        const nx = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+        const ny = -(((touch.clientY - rect.top) / rect.height) * 2 - 1);
+        mouseRef.current.targetX = Math.max(-0.16, Math.min(0.16, nx * 0.14));
+        mouseRef.current.targetY = Math.max(-0.12, Math.min(0.12, ny * 0.1));
+      }
+    };
+
+    const handleTouchEnd = () => {
+      mouseRef.current.targetX = 0;
+      mouseRef.current.targetY = 0;
+    };
+
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
+    container.addEventListener('touchmove', handleTouchMove, { passive: true });
+    container.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     // Resize Observer
     const resizeObserver = new ResizeObserver((entries) => {
@@ -679,6 +697,8 @@ export const ThreeDentalViewport: React.FC<ThreeDentalViewportProps> = ({
       resizeObserver.disconnect();
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
       if (renderTargetRef.current) renderTargetRef.current.dispose();
       if (rendererRef.current && rendererRef.current.domElement) {
         container.removeChild(rendererRef.current.domElement);
@@ -783,7 +803,7 @@ export const ThreeDentalViewport: React.FC<ThreeDentalViewportProps> = ({
     .join(' ');
 
   return (
-    <div className="relative w-full h-full min-h-[280px] overflow-hidden flex items-center justify-center bg-[#06070a] select-none">
+    <div className="relative w-full h-full min-h-[220px] sm:min-h-[280px] overflow-hidden flex items-center justify-center bg-[#06070a] select-none touch-none">
       {/* 3D WebGL Canvas Mount */}
       <div
         ref={mountRef}

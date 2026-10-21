@@ -56,3 +56,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+
+/* Touch & Mobile Utilities */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -41,16 +41,16 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
   };
 
   return (
-    <div className="bg-[#16181f] border border-[#272a36] rounded-xl p-3.5 flex flex-col gap-3 shadow-sm">
+    <div className="bg-[#16181f] border border-[#272a36] rounded-xl p-3 sm:p-3.5 flex flex-col gap-2.5 sm:gap-3 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between pb-2 border-b border-[#232733]">
         <div className="flex items-center gap-2">
           <Sliders className="w-4 h-4 text-amber-400" />
           <h2 className="text-xs font-bold text-zinc-100 uppercase tracking-wider">
-            Painel de Controle Óptico
+            Painel de Controle Óptico (Ajuste Manual)
           </h2>
         </div>
-        <span className="text-[11px] font-mono text-zinc-400">Modo Manual [M]</span>
+        <span className="text-[11px] font-mono text-zinc-400">Modo [M]</span>
       </div>
 
       {/* 1. LENTE MACRO */}
@@ -73,7 +73,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
               <button
                 key={fl}
                 onClick={() => handleSelect('focalLength', fl)}
-                className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded-md border transition-colors cursor-pointer ${
+                className={`flex items-center justify-center gap-1 py-2 sm:py-1.5 px-2 rounded-md border transition-all active:scale-95 cursor-pointer ${
                   isSelected
                     ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
                     : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -108,33 +108,33 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-8 gap-1 font-mono text-xs">
-          {APERTURES.map((fStop) => {
-            const isSelected = settings.aperture === fStop;
-            const isGold = fStop === 22;
-            return (
-              <button
-                key={fStop}
-                onClick={() => handleSelect('aperture', fStop)}
-                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
-                  isSelected
-                    ? 'bg-emerald-400 text-black border-emerald-300 font-bold shadow-sm'
-                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
-                }`}
-              >
-                f/{fStop}
-              </button>
-            );
-          })}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 sm:gap-1 font-mono text-xs">
+            {APERTURES.map((fStop) => {
+              const isSelected = settings.aperture === fStop;
+              const isGold = fStop === 22;
+              return (
+                <button
+                  key={fStop}
+                  onClick={() => handleSelect('aperture', fStop)}
+                  className={`py-2 sm:py-1.5 px-0.5 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
+                    isSelected
+                      ? 'bg-emerald-400 text-black border-emerald-300 font-bold shadow-sm'
+                      : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+                  }`}
+                >
+                  f/{fStop}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-[10px] text-zinc-400">
+            {settings.aperture >= 22
+              ? '★ f/22: Nitidez máxima cobrindo incisivos, caninos e molares simultaneamente.'
+              : settings.aperture <= 4
+              ? '⚠️ f/2.8 a f/4: Profundidade < 1mm; caninos e dentes vizinhos ficam totalmente borrados.'
+              : 'f/8 a f/16: Profundidade moderada, recomendada para retrato do sorriso.'}
+          </p>
         </div>
-        <p className="text-[10px] text-zinc-400">
-          {settings.aperture >= 22
-            ? '★ f/22: Nitidez máxima cobrindo incisivos, caninos e molares simultaneamente.'
-            : settings.aperture <= 4
-            ? '⚠️ f/2.8 a f/4: Profundidade < 1mm; caninos e dentes vizinhos ficam totalmente borrados.'
-            : 'f/8 a f/16: Profundidade moderada, recomendada para retrato do sorriso.'}
-        </p>
-      </div>
 
       {/* 3. VELOCIDADE DO OBTURADOR */}
       <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
@@ -148,7 +148,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-8 gap-1 font-mono text-xs">
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5 sm:gap-1 font-mono text-xs">
           {SHUTTER_SPEEDS.map((speed) => {
             const isSelected = settings.shutterSpeed === speed;
             const isSync = speed === '1/160' || speed === '1/200';
@@ -157,7 +157,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
               <button
                 key={speed}
                 onClick={() => handleSelect('shutterSpeed', speed)}
-                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
+                className={`py-2 sm:py-1.5 px-0.5 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
                   isSelected
                     ? isCutoff
                       ? 'bg-rose-500 text-white border-rose-400 font-bold'
@@ -193,36 +193,35 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-7 gap-1 font-mono text-xs">
-          {ISO_VALUES.map((isoVal) => {
-            const isSelected = settings.iso === isoVal;
-            const isIdeal = isoVal === 100;
-            const isHighNoise = isoVal >= 3200;
-            return (
-              <button
-                key={isoVal}
-                onClick={() => handleSelect('iso', isoVal)}
-                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
-                  isSelected
-                    ? isHighNoise
-                      ? 'bg-rose-500 text-white border-rose-400 font-bold'
-                      : 'bg-zinc-100 text-black border-white font-bold shadow-sm'
-                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
-                }`}
-              >
-                {isoVal}
-              </button>
-            );
-          })}
+          <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5 sm:gap-1 font-mono text-xs">
+            {ISO_VALUES.map((isoVal) => {
+              const isSelected = settings.iso === isoVal;
+              const isHighNoise = isoVal >= 3200;
+              return (
+                <button
+                  key={isoVal}
+                  onClick={() => handleSelect('iso', isoVal)}
+                  className={`py-2 sm:py-1.5 px-0.5 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
+                    isSelected
+                      ? isHighNoise
+                        ? 'bg-rose-500 text-white border-rose-400 font-bold'
+                        : 'bg-zinc-100 text-black border-white font-bold shadow-sm'
+                      : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+                  }`}
+                >
+                  {isoVal}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-[10px] text-zinc-400">
+            {settings.iso === 100
+              ? '★ ISO 100: Ausência de ruído digital e máxima fidelidade de cor para análise de resinas e periquimáceas.'
+              : settings.iso >= 1600
+              ? '⚠️ ISO alto causa granulação severa que destrói detalhes da textura de esmalte e registro clínico.'
+              : 'ISO 200 a 800: Ruído aceitável, mas prefira sempre aumentar a potência do flash em vez do ISO.'}
+          </p>
         </div>
-        <p className="text-[10px] text-zinc-400">
-          {settings.iso === 100
-            ? '★ ISO 100: Ausência de ruído digital e máxima fidelidade de cor para análise de resinas e periquimáceas.'
-            : settings.iso >= 1600
-            ? '⚠️ ISO alto causa granulação severa que destrói detalhes da textura de esmalte e registro clínico.'
-            : 'ISO 200 a 800: Ruído aceitável, mas prefira sempre aumentar a potência do flash em vez do ISO.'}
-        </p>
-      </div>
 
       {/* 5. ILUMINAÇÃO & DIFUSORES D-LUX */}
       <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
@@ -232,17 +231,17 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
             Iluminação & Difusor D-Lux
           </span>
           <span className="font-mono text-amber-300 font-bold text-xs">
-            {settings.flashMode === 'twin' && 'Twin Flash + Difusor D-Lux MF-12'}
-            {settings.flashMode === 'studio' && 'Estúdio + Bouncers / Softbox D-Lux'}
-            {settings.flashMode === 'ring' && 'Ring Flash + Difusor D-Lux YN-14'}
-            {settings.flashMode === 'off' && 'Sem Flash (Luz Ambiente)'}
+            {settings.flashMode === 'twin' && 'Twin D-Lux MF-12'}
+            {settings.flashMode === 'studio' && 'Estúdio D-Lux'}
+            {settings.flashMode === 'ring' && 'Ring D-Lux YN-14'}
+            {settings.flashMode === 'off' && 'Sem Flash'}
           </span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
           <button
             onClick={() => handleSelect('flashMode', 'twin')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.flashMode === 'twin'
                 ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -252,7 +251,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('flashMode', 'studio')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.flashMode === 'studio'
                 ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -262,7 +261,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('flashMode', 'ring')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.flashMode === 'ring'
                 ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -272,7 +271,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('flashMode', 'off')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.flashMode === 'off'
                 ? 'bg-rose-500 text-white border-rose-400 font-bold'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -301,7 +300,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
           <button
             onClick={() => handleSelect('whiteBalance', 'flash')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.whiteBalance === 'flash'
                 ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -311,7 +310,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('whiteBalance', 'custom')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.whiteBalance === 'custom'
                 ? 'bg-zinc-100 text-black border-white font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -321,7 +320,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('whiteBalance', 'cloudy')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.whiteBalance === 'cloudy'
                 ? 'bg-zinc-100 text-black border-white font-bold shadow-sm'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
@@ -331,7 +330,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
           <button
             onClick={() => handleSelect('whiteBalance', 'tungsten')}
-            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+            className={`py-2 sm:py-1.5 px-2 rounded-md border text-center transition-all active:scale-95 cursor-pointer ${
               settings.whiteBalance === 'tungsten'
                 ? 'bg-blue-500 text-white border-blue-400 font-bold'
                 : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'

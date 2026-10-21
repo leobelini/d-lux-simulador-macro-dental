@@ -60,9 +60,9 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
 
   return (
     <div className="flex flex-col bg-[#16181f] rounded-xl border border-[#272a36] p-3 shadow-sm">
-      <div className="flex items-center justify-between mb-2.5 border-b border-[#232733] pb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2.5 border-b border-[#232733] pb-2 gap-2">
         <div className="flex items-center gap-2">
-          <div className="p-1 rounded bg-[#232733] text-amber-400">
+          <div className="p-1 rounded bg-[#232733] text-amber-400 shrink-0">
             <ArrowRightLeft className="w-3.5 h-3.5" />
           </div>
           <div>
@@ -72,7 +72,7 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
         </div>
 
         {/* Ergonomic pill badge */}
-        <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium border bg-zinc-950">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] sm:text-xs font-mono font-medium border bg-zinc-950 self-start sm:self-auto shrink-0">
           {focalLength === 100 ? (
             <span className="flex items-center gap-1 text-emerald-400">
               <ShieldCheck className="w-3.5 h-3.5" />
@@ -93,7 +93,7 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
       </div>
 
       {/* Interactive Optical Schematic SVG */}
-      <div className="relative w-full h-[220px] bg-zinc-950 rounded-xl border border-zinc-850 overflow-hidden flex items-center justify-center">
+      <div className="relative w-full h-[180px] sm:h-[220px] bg-zinc-950 rounded-xl border border-zinc-850 overflow-hidden flex items-center justify-center">
         {/* Soft studio grid background */}
         <div className="absolute inset-0 lcd-grid opacity-30"></div>
 

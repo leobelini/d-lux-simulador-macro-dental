@@ -41,18 +41,18 @@ export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContaminati
   `;
 
   return (
-    <div className="flex flex-col gap-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg p-2.5 w-44">
-      <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
+    <div className="flex flex-col gap-1 bg-black/75 backdrop-blur-md border border-white/10 rounded-lg p-1.5 sm:p-2.5 w-32 sm:w-44">
+      <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-mono text-zinc-400">
         <span className="flex items-center gap-1 font-semibold text-zinc-300">
           <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-          HISTOGRAMA
+          HIST
         </span>
         <span className={evDiff > 1.2 ? 'text-rose-400 font-bold' : evDiff < -1.2 ? 'text-amber-400 font-bold' : 'text-emerald-400'}>
           {evDiff > 0 ? `+${evDiff.toFixed(1)}` : evDiff.toFixed(1)} EV
         </span>
       </div>
 
-      <div className="relative w-full h-11 bg-zinc-950/80 rounded border border-white/5 overflow-hidden">
+      <div className="relative w-full h-7 sm:h-11 bg-zinc-950/80 rounded border border-white/5 overflow-hidden">
         {/* Grid lines */}
         <div className="absolute inset-0 flex justify-between px-2 pointer-events-none opacity-20">
           <div className="w-px h-full bg-white"></div>
@@ -83,21 +83,21 @@ export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContaminati
 
         {/* Warning Badge if clipping */}
         {evDiff > 1.5 && (
-          <span className="absolute right-1 top-0.5 text-[8px] font-mono bg-rose-600/90 text-white px-1 rounded">
+          <span className="absolute right-0.5 top-0.5 text-[7px] sm:text-[8px] font-mono bg-rose-600/90 text-white px-1 rounded">
             ESTOURO
           </span>
         )}
         {evDiff < -1.5 && (
-          <span className="absolute left-1 top-0.5 text-[8px] font-mono bg-blue-600/90 text-white px-1 rounded">
-            SUBEXPOSTO
+          <span className="absolute left-0.5 top-0.5 text-[7px] sm:text-[8px] font-mono bg-blue-600/90 text-white px-1 rounded">
+            SUB
           </span>
         )}
       </div>
 
-      <div className="flex justify-between text-[9px] font-mono text-zinc-500">
-        <span>0 (Sombras)</span>
-        <span>128 (Médios)</span>
-        <span>255 (Altas)</span>
+      <div className="hidden sm:flex justify-between text-[8px] sm:text-[9px] font-mono text-zinc-500">
+        <span>0 (Somb)</span>
+        <span>128</span>
+        <span>255 (Alt)</span>
       </div>
     </div>
   );
