@@ -1,5 +1,5 @@
 import React from 'react';
-import { type SubjectMode, type FocalLength } from '../types/camera';
+import { type SubjectMode, type FocalLength, type FlashMode } from '../types/camera';
 
 interface DentalSubjectCanvasProps {
   focalLength: FocalLength;
@@ -12,6 +12,7 @@ interface DentalSubjectCanvasProps {
   showFocusPeaking: boolean;
   showGrid: boolean;
   subjectMode: SubjectMode;
+  flashMode?: FlashMode;
 }
 
 export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
@@ -25,6 +26,7 @@ export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
   showFocusPeaking,
   showGrid,
   subjectMode,
+  flashMode = 'twin',
 }) => {
   // Focal length determines optical framing / crop / perspective scale
   // 60mm: scale 0.88 (wider view, shows more retractor and lips, slightly curved)
@@ -303,9 +305,26 @@ export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
               <ellipse cx="370" cy="328" rx="4" ry="8" fill="#fcf9ec" opacity="0.85" />
               <ellipse cx="386" cy="327" rx="4" ry="7" fill="#fcf9ec" opacity="0.85" />
 
-              {/* Specular Twin Flash Highlights */}
-              <ellipse cx="358" cy="245" rx="5" ry="32" fill="#ffffff" opacity="0.85" />
-              <ellipse cx="380" cy="248" rx="4" ry="30" fill="#ffffff" opacity="0.75" />
+              {/* Specular Flash Highlights based on flashMode */}
+              {flashMode === 'twin' && (
+                <>
+                  <ellipse cx="358" cy="245" rx="5" ry="32" fill="#ffffff" opacity="0.85" />
+                  <ellipse cx="380" cy="248" rx="4" ry="30" fill="#ffffff" opacity="0.75" />
+                </>
+              )}
+              {flashMode === 'studio' && (
+                <>
+                  {/* Studio Softbox broad diffused vertical reflection along transitional line angles */}
+                  <rect x="350" y="210" width="14" height="85" rx="7" fill="#ffffff" opacity="0.75" />
+                  <rect x="376" y="215" width="11" height="78" rx="5.5" fill="#ffffff" opacity="0.6" />
+                </>
+              )}
+              {flashMode === 'ring' && (
+                <ellipse cx="370" cy="250" rx="6" ry="12" fill="#ffffff" opacity="0.85" />
+              )}
+              {flashMode === 'off' && (
+                <ellipse cx="370" cy="250" rx="10" ry="25" fill="#fef3c7" opacity="0.18" />
+              )}
             </g>
 
             {/* Upper Left Central Incisor (Tooth 21) */}
@@ -331,9 +350,26 @@ export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
               <ellipse cx="430" cy="328" rx="4" ry="8" fill="#fcf9ec" opacity="0.85" />
               <ellipse cx="414" cy="327" rx="4" ry="7" fill="#fcf9ec" opacity="0.85" />
 
-              {/* Specular Flash Highlights */}
-              <ellipse cx="442" cy="245" rx="5" ry="32" fill="#ffffff" opacity="0.85" />
-              <ellipse cx="420" cy="248" rx="4" ry="30" fill="#ffffff" opacity="0.75" />
+              {/* Specular Flash Highlights based on flashMode */}
+              {flashMode === 'twin' && (
+                <>
+                  <ellipse cx="442" cy="245" rx="5" ry="32" fill="#ffffff" opacity="0.85" />
+                  <ellipse cx="420" cy="248" rx="4" ry="30" fill="#ffffff" opacity="0.75" />
+                </>
+              )}
+              {flashMode === 'studio' && (
+                <>
+                  {/* Studio Softbox broad diffused vertical reflection */}
+                  <rect x="436" y="210" width="14" height="85" rx="7" fill="#ffffff" opacity="0.75" />
+                  <rect x="413" y="215" width="11" height="78" rx="5.5" fill="#ffffff" opacity="0.6" />
+                </>
+              )}
+              {flashMode === 'ring' && (
+                <ellipse cx="430" cy="250" rx="6" ry="12" fill="#ffffff" opacity="0.85" />
+              )}
+              {flashMode === 'off' && (
+                <ellipse cx="430" cy="250" rx="10" ry="25" fill="#fef3c7" opacity="0.18" />
+              )}
             </g>
 
             {/* Interdental Papillae & Gums (Upper Arch) */}

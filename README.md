@@ -59,6 +59,7 @@ npm run preview
 
 ### 5. 💡 Iluminação & Flash Odontológico
 - **Twin Flash**: Iluminação bilateral com sombras sutis para textura e relevo vestibular.
+- **Flash de Estúdio (Softbox / Stripbox)**: Iluminação nobre e difusa, criando reflexos contínuos e suaves nas arestas de transição, muito utilizado em odontologia estética artística e cursos de alto padrão.
 - **Ring Flash**: Luz circular uniforme sem sombras, ideal para ortodontia e oclusal.
 - **Sem Flash**: Luz ambiente da clínica, gerando amarelamento e subexposição.
 

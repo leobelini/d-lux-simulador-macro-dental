@@ -164,6 +164,7 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
           showFocusPeaking={showFocusPeaking}
           showGrid={showGrid}
           subjectMode={settings.subjectMode}
+          flashMode={settings.flashMode}
         />
 
         {/* Viewfinder HUD Overlays (Top Edge) */}
@@ -280,6 +281,7 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
                 <Zap className={`w-4 h-4 ${settings.flashMode === 'off' ? 'text-zinc-600' : 'text-amber-400 fill-amber-400'}`} />
                 <span>
                   {settings.flashMode === 'twin' && 'Twin Flash'}
+                  {settings.flashMode === 'studio' && 'Flash Estúdio'}
                   {settings.flashMode === 'ring' && 'Ring Flash'}
                   {settings.flashMode === 'off' && 'Desligado'}
                 </span>

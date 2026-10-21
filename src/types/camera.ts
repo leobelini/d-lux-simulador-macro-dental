@@ -6,7 +6,7 @@ export type ISO = 100 | 200 | 400 | 800 | 1600 | 3200 | 6400;
 
 export type Aperture = 2.8 | 4 | 5.6 | 8 | 11 | 16 | 22 | 32;
 
-export type FlashMode = 'twin' | 'ring' | 'off';
+export type FlashMode = 'twin' | 'ring' | 'studio' | 'off';
 
 export type SubjectMode = 'natural' | 'ortho' | 'vita';
 

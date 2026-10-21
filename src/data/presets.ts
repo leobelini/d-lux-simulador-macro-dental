@@ -77,6 +77,21 @@ export const CLINICAL_PRESETS: Preset[] = [
     },
   },
   {
+    id: 'studio-softbox',
+    name: 'Estúdio: Softbox & Protocolo Artístico',
+    tag: 'Padrão Clínico',
+    description: 'Iluminação difusa de estúdio com softbox/stripbox. Cria reflexos suaves e contínuos nas arestas de transição das facetas de resina e cerâmica.',
+    badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    settings: {
+      focalLength: 100,
+      aperture: 22,
+      shutterSpeed: '1/160',
+      iso: 100,
+      flashMode: 'studio',
+      subjectMode: 'natural',
+    },
+  },
+  {
     id: 'error-shutter-sync',
     name: '⚠️ Erro Comum: Faixa Preta do Obturador',
     tag: 'Erro Comum',

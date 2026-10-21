@@ -336,6 +336,26 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
               </g>
             )}
 
+            {flashMode === 'studio' && (
+              <g id="studio-flash-rig">
+                {/* Studio Softbox Bracket & Heads (Bouncers / Stripboxes) */}
+                {/* Upper Softbox */}
+                <g transform="translate(85, -20)">
+                  <polygon points="0,30 24,0 38,0 20,40" fill="#334155" stroke="#64748b" strokeWidth="1.2" />
+                  <rect x="22" y="-2" width="16" height="38" rx="2" fill="#f8fafc" stroke="#a855f7" strokeWidth="1.5" opacity="0.95" />
+                  <line x1="30" y1="-2" x2="30" y2="36" stroke="#c084fc" strokeWidth="1" strokeDasharray="3 2" />
+                  <text x="44" y="18" fill="#c084fc" fontSize="7" fontWeight="bold" fontFamily="monospace">SOFTBOX</text>
+                </g>
+                {/* Lower Softbox */}
+                <g transform="translate(85, 75)">
+                  <polygon points="0,10 20,0 38,40 24,40" fill="#334155" stroke="#64748b" strokeWidth="1.2" />
+                  <rect x="22" y="4" width="16" height="38" rx="2" fill="#f8fafc" stroke="#a855f7" strokeWidth="1.5" opacity="0.95" />
+                  <line x1="30" y1="4" x2="30" y2="42" stroke="#c084fc" strokeWidth="1" strokeDasharray="3 2" />
+                  <text x="44" y="24" fill="#c084fc" fontSize="7" fontWeight="bold" fontFamily="monospace">SOFTBOX</text>
+                </g>
+              </g>
+            )}
+
             {/* Lens Tag */}
             <text x="24" y="-4" textAnchor="middle" fill="#38bdf8" fontSize="10" fontWeight="bold" fontFamily="monospace">
               {lens.label}

@@ -242,13 +242,13 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </label>
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {/* Twin Flash */}
           <button
             onClick={() => handleSelect('flashMode', 'twin')}
-            className={`flex flex-col items-center py-2.5 px-2 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
               settings.flashMode === 'twin'
-                ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow'
+                ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400'
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
@@ -256,12 +256,25 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
             <span className="text-[10px] text-zinc-400">Estética & Textura 3D</span>
           </button>
 
+          {/* Flash de Estúdio */}
+          <button
+            onClick={() => handleSelect('flashMode', 'studio')}
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              settings.flashMode === 'studio'
+                ? 'bg-purple-500/20 text-purple-200 border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.25)] ring-1 ring-purple-400'
+                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            }`}
+          >
+            <span className="font-bold">Flash de Estúdio</span>
+            <span className="text-[10px] text-zinc-400">Softbox & Luz Difusa</span>
+          </button>
+
           {/* Ring Flash */}
           <button
             onClick={() => handleSelect('flashMode', 'ring')}
-            className={`flex flex-col items-center py-2.5 px-2 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
               settings.flashMode === 'ring'
-                ? 'bg-sky-500/20 text-sky-200 border-sky-400 shadow'
+                ? 'bg-sky-500/20 text-sky-200 border-sky-400 shadow-[0_0_15px_rgba(14,165,233,0.25)] ring-1 ring-sky-400'
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
@@ -272,16 +285,19 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           {/* Off / Clinic Room Light */}
           <button
             onClick={() => handleSelect('flashMode', 'off')}
-            className={`flex flex-col items-center py-2.5 px-2 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
               settings.flashMode === 'off'
                 ? 'bg-rose-500/20 text-rose-200 border-rose-400 shadow'
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
             <span className="font-bold">Sem Flash</span>
-            <span className="text-[10px] text-zinc-400">Luz Amarela Consultório</span>
+            <span className="text-[10px] text-zinc-400">Luz Consultório</span>
           </button>
         </div>
+        <p className="text-[11px] text-zinc-400 italic">
+          💡 Flash de estúdio com softbox produz luz difusa de alto padrão, desenhando as arestas anatômicas com elegância.
+        </p>
       </div>
     </div>
   );

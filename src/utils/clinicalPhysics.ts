@@ -207,6 +207,9 @@ export function evaluateDentalPhoto(settings: CameraSettings): PhotoDiagnostics 
   } else if (flashMode === 'twin') {
     badges.push({ text: 'Flash Twin (Estética & Textura)', type: 'success' });
     feedback.push('Flash Twin lateral cria micro-sombras ideais para destacar as periquimáceas e linhas de desenvolvimento vestibular do esmalte.');
+  } else if (flashMode === 'studio') {
+    badges.push({ text: 'Flash de Estúdio (Softbox)', type: 'success' });
+    feedback.push('Flash de Estúdio com Softbox/Stripbox: Luz suave e difusa com reflexos alongados nas arestas de transição dos dentes. Padrão nobre para fotografia de protocolo estético e cursos odontológicos.');
   } else if (flashMode === 'ring') {
     badges.push({ text: 'Flash Ring (Luz Circular Plana)', type: 'info' });
     feedback.push('Flash Circular ilumina fundo de boca e molares sem sombras, ideal para ortodontia e oclusal, embora "achate" um pouco a textura vestibular.');

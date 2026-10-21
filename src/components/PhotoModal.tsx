@@ -73,6 +73,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               showFocusPeaking={false}
               showGrid={false}
               subjectMode={settings.subjectMode}
+              flashMode={settings.flashMode}
             />
 
             {/* Score Stamp Badge */}
@@ -119,6 +120,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                   <span className="text-zinc-500 block text-[10px]">ILUMINAÇÃO</span>
                   <span className="text-white font-bold capitalize">
                     {settings.flashMode === 'twin' && 'Twin Flash Estético (5500K)'}
+                    {settings.flashMode === 'studio' && 'Flash de Estúdio / Softbox (5500K)'}
                     {settings.flashMode === 'ring' && 'Ring Flash Circular (5500K)'}
                     {settings.flashMode === 'off' && 'Luz Ambiente (3200K Amarelada)'}
                   </span>
