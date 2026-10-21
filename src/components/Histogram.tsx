@@ -1,19 +1,25 @@
 import React from 'react';
+import { type WhiteBalanceMode } from '../types/camera';
 
 interface HistogramProps {
   evDiff: number; // -3 to +3
   ambientContamination: number;
+  whiteBalance?: WhiteBalanceMode;
 }
 
-export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContamination }) => {
+export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContamination, whiteBalance = 'flash' }) => {
   // Center of histogram shifts based on EV difference
-  // EV = 0 -> center ~ 50%
-  // EV = -3 -> center ~ 15%
-  // EV = +3 -> center ~ 85%
   const normalizedShift = Math.max(-1, Math.min(1, evDiff / 3));
   const peakX = 50 + normalizedShift * 35; // 15 to 85
 
-  // Generate dynamic bezier paths for Luminance, Red (gingiva), and Green/Blue (enamel)
+  // Red curve shifts based on warm ambient or warm WB (cloudy)
+  const wbRedShift = whiteBalance === 'cloudy' ? 9 : whiteBalance === 'tungsten' ? -8 : 0;
+  const redPeak = Math.max(10, Math.min(90, peakX + ambientContamination * 10 + wbRedShift));
+
+  // Blue curve for cool WB (tungsten)
+  const wbBlueShift = whiteBalance === 'tungsten' ? 10 : whiteBalance === 'cloudy' ? -8 : 0;
+  const bluePeak = Math.max(10, Math.min(90, peakX + wbBlueShift));
+
   const lumaPath = `
     M 0 45 
     L 10 44
@@ -22,12 +28,16 @@ export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContaminati
     L 100 45 Z
   `;
 
-  // Red curve (gums and warm dentin) shifts slightly right if warm ambient light
-  const redPeak = peakX + ambientContamination * 10;
   const redPath = `
     M 0 45 
     C ${redPeak * 0.4} 42, ${redPeak - 12} 18, ${redPeak} 14 
     C ${redPeak + 14} 18, ${redPeak + 20} 38, 100 45 Z
+  `;
+
+  const bluePath = `
+    M 0 45 
+    C ${bluePeak * 0.4} 43, ${bluePeak - 12} 24, ${bluePeak} 20 
+    C ${bluePeak + 14} 24, ${bluePeak + 20} 40, 100 45 Z
   `;
 
   return (
@@ -51,8 +61,11 @@ export const Histogram: React.FC<HistogramProps> = ({ evDiff, ambientContaminati
         </div>
 
         <svg viewBox="0 0 100 45" className="w-full h-full preserve-3d" preserveAspectRatio="none">
-          {/* Red Channel (gums) */}
-          <path d={redPath} fill="#f43f5e" opacity="0.4" />
+          {/* Red Channel (gums / warm WB) */}
+          <path d={redPath} fill="#f43f5e" opacity="0.38" />
+
+          {/* Blue Channel (enamel opalescence / cool WB) */}
+          <path d={bluePath} fill="#38bdf8" opacity="0.3" />
           
           {/* Luminance Curve */}
           <path d={lumaPath} fill="#ffffff" opacity="0.55" />

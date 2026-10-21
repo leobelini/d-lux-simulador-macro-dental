@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { type CameraSettings, LENS_SPECS } from '../types/camera';
+import { type CameraSettings, LENS_SPECS, WB_SPECS } from '../types/camera';
 import { type PhotoDiagnostics } from '../utils/clinicalPhysics';
 import { DentalSubjectCanvas } from './DentalSubjectCanvas';
 import confetti from 'canvas-confetti';
@@ -74,6 +74,7 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               showGrid={false}
               subjectMode={settings.subjectMode}
               flashMode={settings.flashMode}
+              whiteBalance={settings.whiteBalance}
             />
 
             {/* Score Stamp Badge */}
@@ -115,6 +116,10 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                 <div className="bg-zinc-950/80 p-2 rounded-lg border border-zinc-850">
                   <span className="text-zinc-500 block text-[10px]">ISO</span>
                   <span className="text-yellow-300 font-bold">{settings.iso}</span>
+                </div>
+                <div className="col-span-2 bg-zinc-950/80 p-2 rounded-lg border border-zinc-850">
+                  <span className="text-zinc-500 block text-[10px]">BALANÇO DE BRANCO (WB)</span>
+                  <span className="text-amber-300 font-bold">{WB_SPECS[settings.whiteBalance].label}</span>
                 </div>
                 <div className="col-span-2 bg-zinc-950/80 p-2 rounded-lg border border-zinc-850">
                   <span className="text-zinc-500 block text-[10px]">ILUMINAÇÃO</span>

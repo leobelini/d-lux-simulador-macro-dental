@@ -63,7 +63,13 @@ npm run preview
 - **Ring Flash**: Luz circular uniforme sem sombras, ideal para ortodontia e oclusal.
 - **Sem Flash**: Luz ambiente da clínica, gerando amarelamento e subexposição.
 
-### 6. 🦷 Cenários Clínicos Interativos
+### 6. 🎨 Balanço de Branco (WB - Temperatura de Cor)
+- **⚡ Flash (5500K)**: Padrão Ouro Odontológico — luz neutra calibrada, essencial para tomada de cor com escala VITA e confecção de facetas/resinas.
+- **🎯 Cartão Cinza 18%**: Calibração manual milimétrica personalizada.
+- **☁️ Nublado (6500K)**: Tom quente e amarelado. Demonstra o risco de o dentista selecionar uma cor de resina mais escura que o dente real.
+- **💡 Tungstênio (3200K)**: Tom frio e azulado, acinzentando o esmalte e mascarando o halo incisal.
+
+### 7. 🦷 Cenários Clínicos Interativos
 - **Estética Anterior (11 e 21)** com halo incisal e textura de esmalte.
 - **Ortodontia**: Braquetes metálicos, fio ortodôntico e ligaduras elastoméricas azuis.
 - **Escala de Cor VITA**: Comparação direta com a pastilha cerâmica A2.

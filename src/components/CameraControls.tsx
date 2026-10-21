@@ -6,7 +6,9 @@ import {
   type ISO,
   type Aperture,
   type FlashMode,
+  type WhiteBalanceMode,
   LENS_SPECS,
+  WB_SPECS,
 } from '../types/camera';
 import { sounds } from '../utils/soundEffects';
 import {
@@ -15,6 +17,7 @@ import {
   Sun,
   Aperture as ApertureIcon,
   Zap,
+  Palette,
 } from 'lucide-react';
 
 interface CameraControlsProps {
@@ -297,6 +300,76 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
         </div>
         <p className="text-[11px] text-zinc-400 italic">
           💡 Flash de estúdio com softbox produz luz difusa de alto padrão, desenhando as arestas anatômicas com elegância.
+        </p>
+      </div>
+
+      {/* 6. BALANÇO DE BRANCO (WHITE BALANCE - WB / TEMPERATURA DE COR) */}
+      <div className="flex flex-col gap-2 pt-1 border-t border-zinc-800/80">
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
+            <Palette className="w-3.5 h-3.5 text-amber-300" />
+            6. Balanço de Branco (WB / Cor da Fotografia)
+          </label>
+          <span className="text-xs font-mono font-bold text-amber-300">
+            {WB_SPECS[settings.whiteBalance].kelvin}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {/* Flash 5500K */}
+          <button
+            onClick={() => handleSelect('whiteBalance', 'flash')}
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              settings.whiteBalance === 'flash'
+                ? 'bg-emerald-500/20 text-emerald-200 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)] ring-1 ring-emerald-400 font-bold'
+                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            }`}
+          >
+            <span className="font-bold">Flash 5500K</span>
+            <span className="text-[10px] text-zinc-400">Padrão Ouro (Neutro)</span>
+          </button>
+
+          {/* Cartão Cinza 18% */}
+          <button
+            onClick={() => handleSelect('whiteBalance', 'custom')}
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              settings.whiteBalance === 'custom'
+                ? 'bg-cyan-500/20 text-cyan-200 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400 font-bold'
+                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            }`}
+          >
+            <span className="font-bold">Cinza 18%</span>
+            <span className="text-[10px] text-zinc-400">Calibrado Manual</span>
+          </button>
+
+          {/* Nublado 6500K */}
+          <button
+            onClick={() => handleSelect('whiteBalance', 'cloudy')}
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              settings.whiteBalance === 'cloudy'
+                ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400 font-bold'
+                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            }`}
+          >
+            <span className="font-bold">Nublado 6500K</span>
+            <span className="text-[10px] text-zinc-400">Quente / Amarelado</span>
+          </button>
+
+          {/* Tungstênio 3200K */}
+          <button
+            onClick={() => handleSelect('whiteBalance', 'tungsten')}
+            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+              settings.whiteBalance === 'tungsten'
+                ? 'bg-blue-500/20 text-blue-200 border-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.25)] ring-1 ring-blue-400 font-bold'
+                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            }`}
+          >
+            <span className="font-bold">Tungstênio 3200K</span>
+            <span className="text-[10px] text-zinc-400">Frio / Azulado</span>
+          </button>
+        </div>
+        <p className="text-[11px] text-zinc-400 italic">
+          🎨 {WB_SPECS[settings.whiteBalance].description}
         </p>
       </div>
     </div>

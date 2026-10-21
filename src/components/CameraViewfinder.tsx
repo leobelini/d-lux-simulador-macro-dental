@@ -7,6 +7,7 @@ import {
   type Aperture,
   type SubjectMode,
   LENS_SPECS,
+  WB_SPECS,
   shutterSpeedToSeconds
 } from '../types/camera';
 import { type PhotoDiagnostics } from '../utils/clinicalPhysics';
@@ -165,6 +166,7 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
           showGrid={showGrid}
           subjectMode={settings.subjectMode}
           flashMode={settings.flashMode}
+          whiteBalance={settings.whiteBalance}
         />
 
         {/* Viewfinder HUD Overlays (Top Edge) */}
@@ -178,8 +180,8 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
               <span className="px-1.5 py-0.5 rounded bg-zinc-900/80 border border-white/20 text-emerald-300">
                 AF-S [PONTO]
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-zinc-900/80 border border-white/20 text-amber-300">
-                WB: 5500K
+              <span className="px-1.5 py-0.5 rounded bg-zinc-900/80 border border-white/20 text-amber-300 font-bold">
+                WB: {WB_SPECS[settings.whiteBalance].kelvin}
               </span>
             </div>
 
@@ -190,7 +192,11 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
 
           {/* Top Right: Live Dynamic Histogram */}
           <div className="pointer-events-auto">
-            <Histogram evDiff={diagnostics.evDiff} ambientContamination={diagnostics.ambientLightContamination} />
+            <Histogram
+              evDiff={diagnostics.evDiff}
+              ambientContamination={diagnostics.ambientLightContamination}
+              whiteBalance={settings.whiteBalance}
+            />
           </div>
         </div>
 
@@ -271,6 +277,14 @@ export const CameraViewfinder: React.FC<CameraViewfinderProps> = ({
               <span className="text-[10px] text-zinc-400 uppercase tracking-wider">Lente</span>
               <span className="text-xl font-bold text-cyan-400 tracking-tight">
                 {settings.focalLength}mm
+              </span>
+            </div>
+
+            {/* White Balance */}
+            <div className="flex flex-col">
+              <span className="text-[10px] text-zinc-400 uppercase tracking-wider">Balanço WB</span>
+              <span className="text-xl font-bold text-amber-300 tracking-tight">
+                {WB_SPECS[settings.whiteBalance].kelvin}
               </span>
             </div>
 

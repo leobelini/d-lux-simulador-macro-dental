@@ -28,7 +28,8 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
       p.iso === c.iso &&
       p.aperture === c.aperture &&
       p.flashMode === c.flashMode &&
-      p.subjectMode === c.subjectMode
+      p.subjectMode === c.subjectMode &&
+      p.whiteBalance === c.whiteBalance
     );
   };
 

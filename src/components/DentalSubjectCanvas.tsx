@@ -1,5 +1,5 @@
 import React from 'react';
-import { type SubjectMode, type FocalLength, type FlashMode } from '../types/camera';
+import { type SubjectMode, type FocalLength, type FlashMode, type WhiteBalanceMode, WB_SPECS } from '../types/camera';
 
 interface DentalSubjectCanvasProps {
   focalLength: FocalLength;
@@ -13,6 +13,7 @@ interface DentalSubjectCanvasProps {
   showGrid: boolean;
   subjectMode: SubjectMode;
   flashMode?: FlashMode;
+  whiteBalance?: WhiteBalanceMode;
 }
 
 export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
@@ -27,7 +28,9 @@ export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
   showGrid,
   subjectMode,
   flashMode = 'twin',
+  whiteBalance = 'flash',
 }) => {
+  const wbSpec = WB_SPECS[whiteBalance] || WB_SPECS.flash;
   // Focal length determines optical framing / crop / perspective scale
   // 60mm: scale 0.88 (wider view, shows more retractor and lips, slightly curved)
   // 85mm: scale 0.95
@@ -476,6 +479,19 @@ export const DentalSubjectCanvas: React.FC<DentalSubjectCanvasProps> = ({
             height="520"
             fill="#d97706"
             opacity={ambientLightContamination * 0.38}
+            style={{ mixBlendMode: 'color' }}
+          />
+        )}
+
+        {/* White Balance Color Cast Overlay (Temperatura de Cor / Balanço de Branco) */}
+        {wbSpec.tintOpacity > 0 && (
+          <rect
+            x="0"
+            y="0"
+            width="800"
+            height="520"
+            fill={wbSpec.tintColor}
+            opacity={wbSpec.tintOpacity}
             style={{ mixBlendMode: 'color' }}
           />
         )}

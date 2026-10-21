@@ -14,6 +14,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'twin',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -29,6 +30,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'twin',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -44,6 +46,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'ring',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -59,13 +62,14 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'ring',
       subjectMode: 'ortho',
+      whiteBalance: 'flash',
     },
   },
   {
     id: 'shade-vita',
     name: 'Tomada de Cor (Escala VITA)',
     tag: 'Padrão Clínico',
-    description: 'Fotografia comparativa com a pastilha da escala VITA encostada no incisivo central. Requer ISO 100 e flash estroboscópico para cor 100% fidedigna.',
+    description: 'Fotografia comparativa com a pastilha da escala VITA encostada no incisivo central. Requer ISO 100, flash calibrado e WB Flash 5500K.',
     badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
     settings: {
       focalLength: 100,
@@ -74,6 +78,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'twin',
       subjectMode: 'vita',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -89,6 +94,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'studio',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -104,6 +110,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'twin',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
     },
   },
   {
@@ -119,6 +126,7 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 1600,
       flashMode: 'off',
       subjectMode: 'natural',
+      whiteBalance: 'cloudy',
     },
   },
   {
@@ -134,6 +142,23 @@ export const CLINICAL_PRESETS: Preset[] = [
       iso: 100,
       flashMode: 'twin',
       subjectMode: 'natural',
+      whiteBalance: 'flash',
+    },
+  },
+  {
+    id: 'error-wrong-wb',
+    name: '⚠️ Erro Comum: WB Incorreto (Tungstênio Frio)',
+    tag: 'Erro Comum',
+    description: 'Fotografar com WB em Tungstênio (3200K) usando flash. A câmera compensa aplicando um filtro azul excessivo que desfigura a cor do esmalte e gengiva!',
+    badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    settings: {
+      focalLength: 100,
+      aperture: 22,
+      shutterSpeed: '1/160',
+      iso: 100,
+      flashMode: 'twin',
+      subjectMode: 'natural',
+      whiteBalance: 'tungsten',
     },
   },
 ];

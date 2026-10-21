@@ -10,6 +10,8 @@ export type FlashMode = 'twin' | 'ring' | 'studio' | 'off';
 
 export type SubjectMode = 'natural' | 'ortho' | 'vita';
 
+export type WhiteBalanceMode = 'flash' | 'cloudy' | 'tungsten' | 'custom';
+
 export interface CameraSettings {
   focalLength: FocalLength;
   shutterSpeed: ShutterSpeed;
@@ -17,7 +19,50 @@ export interface CameraSettings {
   aperture: Aperture;
   flashMode: FlashMode;
   subjectMode: SubjectMode;
+  whiteBalance: WhiteBalanceMode;
 }
+
+export const WB_SPECS: Record<WhiteBalanceMode, {
+  name: string;
+  kelvin: string;
+  label: string;
+  tintColor: string;
+  tintOpacity: number;
+  description: string;
+}> = {
+  flash: {
+    name: 'Flash',
+    kelvin: '5500K',
+    label: '⚡ Flash (5500K)',
+    tintColor: '#ffffff',
+    tintOpacity: 0,
+    description: 'Padrão Ouro Odonto: luz branca neutra calibrada (5500K). Cores 100% fiéis para resina e cerâmica.',
+  },
+  cloudy: {
+    name: 'Nublado / Sombra',
+    kelvin: '6500K',
+    label: '☁️ Nublado (6500K)',
+    tintColor: '#d97706',
+    tintOpacity: 0.24,
+    description: 'Tom quente e amarelado. Perigo: induz o dentista a escolher uma cor de resina mais escura (ex: A3 ao invés de A1).',
+  },
+  tungsten: {
+    name: 'Tungstênio',
+    kelvin: '3200K',
+    label: '💡 Tungstênio (3200K)',
+    tintColor: '#0284c7',
+    tintOpacity: 0.24,
+    description: 'Tom frio e azulado. Acinzenta o dente e apaga a leitura natural do halo incisal e da opalescência.',
+  },
+  custom: {
+    name: 'Cartão Cinza 18%',
+    kelvin: 'Custom 5500K',
+    label: '🎯 Cinza 18%',
+    tintColor: '#ffffff',
+    tintOpacity: 0,
+    description: 'Calibração milimétrica personalizada feita com cartão cinza 18% no plano de foco.',
+  },
+};
 
 export interface Preset {
   id: string;

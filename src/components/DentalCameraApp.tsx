@@ -18,6 +18,7 @@ export const DentalCameraApp: React.FC = () => {
     aperture: 22,
     flashMode: 'twin',
     subjectMode: 'natural',
+    whiteBalance: 'flash',
   });
 
   const [activeTab, setActiveTab] = useState<'viewfinder' | 'diagram' | 'both'>('both');

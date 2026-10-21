@@ -16,7 +16,7 @@ export interface PhotoDiagnostics {
 }
 
 export function evaluateDentalPhoto(settings: CameraSettings): PhotoDiagnostics {
-  const { focalLength, shutterSpeed, iso, aperture, flashMode } = settings;
+  const { focalLength, shutterSpeed, iso, aperture, flashMode, whiteBalance } = settings;
   const shutterSec = shutterSpeedToSeconds(shutterSpeed);
   const lens = LENS_SPECS[focalLength];
 
@@ -213,6 +213,23 @@ export function evaluateDentalPhoto(settings: CameraSettings): PhotoDiagnostics 
   } else if (flashMode === 'ring') {
     badges.push({ text: 'Flash Ring (Luz Circular Plana)', type: 'info' });
     feedback.push('Flash Circular ilumina fundo de boca e molares sem sombras, ideal para ortodontia e oclusal, embora "achate" um pouco a textura vestibular.');
+  }
+
+  // Evaluate White Balance (WB)
+  if (whiteBalance === 'flash') {
+    badges.push({ text: 'WB Flash (5500K Neutro)', type: 'success' });
+    feedback.push('Balanço de Branco em 5500K (Flash): Temperatura neutra ideal, garantindo fidelidade de cor para seleção de resinas e cerâmicas.');
+  } else if (whiteBalance === 'custom') {
+    badges.push({ text: 'WB Cartão Cinza 18%', type: 'success' });
+    feedback.push('Calibração personalizada com cartão cinza 18%: Precisão laboratorial máxima para tomada de cor e envio ao protético.');
+  } else if (whiteBalance === 'cloudy') {
+    score -= 20;
+    badges.push({ text: 'WB Nublado: Tom Amarelado', type: 'warning' });
+    feedback.push('ALERTA WB (6500K): Imagem excessivamente quente/amarelada. Risco de induzir o dentista a escolher uma resina mais escura que o dente real.');
+  } else if (whiteBalance === 'tungsten') {
+    score -= 25;
+    badges.push({ text: 'WB Tungstênio: Tom Frio/Azulado', type: 'danger' });
+    feedback.push('ALERTA WB (3200K): A câmera aplica filtro azul, deixando os dentes acinzentados e destruindo a leitura da opalescência incisal.');
   }
 
   score = Math.max(10, Math.min(100, score));
