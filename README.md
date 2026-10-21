@@ -11,19 +11,28 @@ Um simulador interativo projetado para dentistas e fotógrafos odontológicos, e
 - npm ou pnpm
 
 ### Instalação e Execução
-```bash
-# Instalar dependências (caso ainda não tenha feito)
-npm install
+### 🖱️ Abrir Diretamente com 2 Cliques (Sem Servidor / Standalone)
+Para gerar um único arquivo HTML 100% autônomo (não precisa de `npm run dev`, nem de servidor local):
 
+```bash
+npm run build:standalone
+```
+
+Isso gera os arquivos:
+- `index.html` (na raiz do projeto)
+- `simulador-macro-dental.html` (na raiz do projeto)
+
+👉 **Basta dar 2 cliques** no arquivo no Finder / Explorador de Arquivos para abrir e usar no navegador (Chrome, Safari, Edge, Firefox)!
+
+### 🌐 Modo Desenvolvimento (com servidor Astro)
+```bash
 # Iniciar servidor de desenvolvimento local
 npm run dev
 
-# Ou para compilar a versão de produção
+# Ou para compilar a versão tradicional do Astro
 npm run build
 npm run preview
 ```
-
-O aplicativo estará disponível em `http://localhost:4321`.
 
 ---
 
