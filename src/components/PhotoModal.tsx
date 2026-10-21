@@ -3,7 +3,8 @@ import { type CameraSettings, LENS_SPECS, WB_SPECS } from '../types/camera';
 import { type PhotoDiagnostics } from '../utils/clinicalPhysics';
 import { DentalSubjectCanvas } from './DentalSubjectCanvas';
 import confetti from 'canvas-confetti';
-import { X, Award } from 'lucide-react';
+import { X, Award, ExternalLink } from 'lucide-react';
+import { DLUX_LOGO_BASE64 } from '../assets/dluxLogo';
 
 interface PhotoModalProps {
   isOpen: boolean;
@@ -38,15 +39,15 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
       <div className="relative flex flex-col w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden max-h-[92vh]">
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800 bg-zinc-900/90">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
-              <Award className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-white">Registro Fotográfico Capturado</h3>
-              <p className="text-xs text-zinc-400 font-mono">IMG_DENTAL_0042.RAW (1:1 Macro)</p>
+        {/* Header with D-Lux Branding */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800 bg-zinc-900/95">
+          <div className="flex items-center gap-3">
+            <img src={DLUX_LOGO_BASE64} alt="D-Lux Diffuser" className="h-7 w-auto object-contain" />
+            <div className="border-l border-zinc-800 pl-3">
+              <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                D-Lux Dental Studio <span className="text-zinc-500 font-normal">|</span> Registro Fotográfico
+              </h3>
+              <p className="text-xs text-amber-400/90 font-mono">Aplicação Proprietária D-Lux Diffuser • IMG_DLUX_0042.RAW</p>
             </div>
           </div>
 
@@ -122,12 +123,12 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
                   <span className="text-amber-300 font-bold">{WB_SPECS[settings.whiteBalance].label}</span>
                 </div>
                 <div className="col-span-2 bg-zinc-950/80 p-2 rounded-lg border border-zinc-850">
-                  <span className="text-zinc-500 block text-[10px]">ILUMINAÇÃO</span>
-                  <span className="text-white font-bold capitalize">
-                    {settings.flashMode === 'twin' && 'Twin Flash Estético (5500K)'}
-                    {settings.flashMode === 'studio' && 'Flash de Estúdio / Softbox (5500K)'}
-                    {settings.flashMode === 'ring' && 'Ring Flash Circular (5500K)'}
-                    {settings.flashMode === 'off' && 'Luz Ambiente (3200K Amarelada)'}
+                  <span className="text-zinc-500 block text-[10px]">ILUMINAÇÃO & DIFUSOR</span>
+                  <span className="text-white font-bold">
+                    {settings.flashMode === 'twin' && 'Twin Flash + Difusor D-Lux MF-12'}
+                    {settings.flashMode === 'studio' && 'Estúdio + Bouncers / Softbox D-Lux'}
+                    {settings.flashMode === 'ring' && 'Ring Flash + Difusor D-Lux YN-14'}
+                    {settings.flashMode === 'off' && 'Sem Flash (Luz Ambiente Clínica)'}
                   </span>
                 </div>
               </div>
@@ -143,10 +144,19 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
               </p>
             </div>
 
-            <div className="mt-auto flex gap-2">
+            <div className="mt-auto flex flex-col gap-2 pt-2 border-t border-zinc-800">
+              <a
+                href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-medium transition-colors"
+              >
+                <span>Conhecer Difusores D-Lux</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
               <button
                 onClick={onClose}
-                className="flex-1 py-2 px-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition-colors"
+                className="w-full py-2 px-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs transition-colors"
               >
                 Voltar à Câmera
               </button>

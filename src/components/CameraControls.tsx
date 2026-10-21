@@ -246,7 +246,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {/* Twin Flash */}
+          {/* Twin Flash + D-Lux Diffuser */}
           <button
             onClick={() => handleSelect('flashMode', 'twin')}
             className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
@@ -255,11 +255,11 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
-            <span className="font-bold">Twin Flash</span>
-            <span className="text-[10px] text-zinc-400">Estética & Textura 3D</span>
+            <span className="font-bold">Twin + D-Lux</span>
+            <span className="text-[10px] text-zinc-400">Difusor Twin MF-12</span>
           </button>
 
-          {/* Flash de Estúdio */}
+          {/* Flash de Estúdio / Bouncers D-Lux */}
           <button
             onClick={() => handleSelect('flashMode', 'studio')}
             className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
@@ -268,11 +268,11 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
-            <span className="font-bold">Flash de Estúdio</span>
-            <span className="text-[10px] text-zinc-400">Softbox & Luz Difusa</span>
+            <span className="font-bold">Estúdio / Bouncers</span>
+            <span className="text-[10px] text-zinc-400">Softbox D-Lux</span>
           </button>
 
-          {/* Ring Flash */}
+          {/* Ring Flash + Ring Diffuser D-Lux */}
           <button
             onClick={() => handleSelect('flashMode', 'ring')}
             className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
@@ -281,8 +281,8 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
                 : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
             }`}
           >
-            <span className="font-bold">Ring Flash</span>
-            <span className="text-[10px] text-zinc-400">Ortodontia & Oclusal</span>
+            <span className="font-bold">Ring + D-Lux</span>
+            <span className="text-[10px] text-zinc-400">Ring Diffuser YN-14</span>
           </button>
 
           {/* Off / Clinic Room Light */}
@@ -299,7 +299,7 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
           </button>
         </div>
         <p className="text-[11px] text-zinc-400 italic">
-          💡 Flash de estúdio com softbox produz luz difusa de alto padrão, desenhando as arestas anatômicas com elegância.
+          💡 Os difusores D-Lux transformam a luz pontual dura em iluminação difusa tridimensional calibrada, ideal para fotografia de facetas, mamelos e periquimáceas.
         </p>
       </div>
 

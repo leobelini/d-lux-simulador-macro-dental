@@ -312,27 +312,34 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
               </text>
             </g>
 
-            {/* FLASH MOUNT & STROBES */}
+            {/* FLASH MOUNT & STROBES WITH D-LUX DIFFUSERS */}
             {flashMode === 'twin' && (
               <g id="twin-flash-rig">
                 {/* Twin Flash Bracket Arms */}
                 <path d="M 85 36 L 96 15" stroke="#64748b" strokeWidth="2.5" />
                 <path d="M 85 74 L 96 95" stroke="#64748b" strokeWidth="2.5" />
 
-                {/* Top Flash Head */}
+                {/* Top Flash Head + D-Lux Diffuser */}
                 <rect x="94" y="8" width="16" height="14" rx="2" fill="#f8fafc" stroke="#334155" strokeWidth="1.2" />
                 <ellipse cx="102" cy="15" rx="3" ry="5" fill="#38bdf8" />
+                {/* D-Lux Diffuser Bouncer Cap */}
+                <rect x="109" y="5" width="8" height="20" rx="2" fill="#fbbf24" stroke="#d97706" strokeWidth="1" />
+                <text x="120" y="14" fill="#fbbf24" fontSize="7" fontWeight="bold" fontFamily="monospace">D-LUX MF12</text>
 
-                {/* Bottom Flash Head */}
+                {/* Bottom Flash Head + D-Lux Diffuser */}
                 <rect x="94" y="88" width="16" height="14" rx="2" fill="#f8fafc" stroke="#334155" strokeWidth="1.2" />
                 <ellipse cx="102" cy="95" rx="3" ry="5" fill="#38bdf8" />
+                <rect x="109" y="85" width="8" height="20" rx="2" fill="#fbbf24" stroke="#d97706" strokeWidth="1" />
+                <text x="120" y="94" fill="#fbbf24" fontSize="7" fontWeight="bold" fontFamily="monospace">D-LUX MF12</text>
               </g>
             )}
 
             {flashMode === 'ring' && (
               <g id="ring-flash-rig">
-                {/* Ring Flash Circular Head around lens */}
+                {/* Ring Flash Circular Head around lens + D-Lux Ring Diffuser */}
                 <ellipse cx="88" cy="55" rx="5" ry="24" fill="#ffffff" stroke="#0284c7" strokeWidth="2" />
+                <ellipse cx="91" cy="55" rx="3" ry="26" fill="none" stroke="#fbbf24" strokeWidth="1.8" />
+                <text x="96" y="58" fill="#fbbf24" fontSize="7" fontWeight="bold" fontFamily="monospace">D-LUX RING</text>
               </g>
             )}
 

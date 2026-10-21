@@ -1,6 +1,10 @@
-# 📸 Simulador de Fotografia Macro Odontológica (Astro + React)
+# 📸 D-Lux Diffuser | Simulador de Fotografia Macro Odontológica
 
-Um simulador interativo projetado para dentistas e fotógrafos odontológicos, ensinando de forma prática, visual e dinâmica os fundamentos da fotografia macro intraoral.
+> **Aplicação Proprietária D-Lux Diffuser**  
+> Loja Oficial: [dluxdiffuser.lojavirtualnuvem.com.br](https://dluxdiffuser.lojavirtualnuvem.com.br/)  
+> © 2026 D-Lux Diffuser. Todos os direitos reservados.
+
+Um simulador interativo oficial desenvolvido para a **D-Lux**, ensinando de forma prática, visual e dinâmica os fundamentos da fotografia macro intraoral e o impacto crucial dos difusores profissionais (Twin MF-12, Ring YN-14 e Estúdio) na odontologia estética e diagnóstica.
 
 ---
 
@@ -83,3 +87,11 @@ npm run preview
 - **Lucide Icons**
 - **Web Audio API** (Sons mecânicos sintetizados em tempo real de obturador e catraca)
 - **Canvas Confetti**
+
+---
+
+## ⚖️ Direitos Autorais e Propriedade Intelectual
+
+Esta aplicação é propriedade exclusiva da **D-Lux Diffuser**. Todos os direitos reservados.  
+Visite o catálogo oficial de difusores odontológicos em [https://dluxdiffuser.lojavirtualnuvem.com.br/](https://dluxdiffuser.lojavirtualnuvem.com.br/).
+

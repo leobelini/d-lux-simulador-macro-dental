@@ -7,7 +7,8 @@ import { CameraControls } from './CameraControls';
 import { PresetSelector } from './PresetSelector';
 import { ClinicalFeedback } from './ClinicalFeedback';
 import { PhotoModal } from './PhotoModal';
-import { Camera } from 'lucide-react';
+import { Camera, ExternalLink } from 'lucide-react';
+import { DLUX_LOGO_BASE64 } from '../assets/dluxLogo';
 
 export const DentalCameraApp: React.FC = () => {
   // Default to dental photography gold standard: 100mm Macro, 1/160s, ISO 100, f/22, Twin Flash
@@ -38,28 +39,52 @@ export const DentalCameraApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090c13] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
-      {/* Top Navigation Bar */}
-      <header className="border-b border-zinc-800 bg-[#0d111a]/90 backdrop-blur-md sticky top-0 z-40 px-4 lg:px-8 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-600 to-emerald-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 text-white">
-              <Camera className="w-5 h-5" />
-            </div>
-            <div>
+    <div className="min-h-screen bg-[#090c13] text-slate-100 flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+      {/* Top Navigation Bar with D-Lux Official Brand */}
+      <header className="border-b border-zinc-800 bg-[#0d111a]/95 backdrop-blur-md sticky top-0 z-40 px-4 lg:px-8 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            {/* D-Lux Official Logo */}
+            <a
+              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center transition-transform hover:scale-105"
+              title="Acessar D-Lux Diffuser Oficial"
+            >
+              <img
+                src={DLUX_LOGO_BASE64}
+                alt="D-Lux Diffuser Logo"
+                className="h-9 sm:h-10 w-auto object-contain drop-shadow-[0_2px_8px_rgba(245,158,11,0.25)]"
+              />
+            </a>
+
+            <div className="border-l border-zinc-800 pl-3">
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-bold text-white tracking-tight">
-                  Simulador de Fotografia Macro Odontológica
+                <h1 className="text-base font-extrabold text-white tracking-tight">
+                  Simulador Macro Odontológico
                 </h1>
-                <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-full">
-                  ODONTO PRO
+                <span className="hidden sm:inline-block px-2 py-0.5 text-[9px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 rounded-full tracking-wider uppercase">
+                  D-LUX PROPRIETARY
                 </span>
               </div>
               <p className="text-xs text-zinc-400 hidden sm:block">
-                Aprenda na prática a relação entre Lente, Obturador, ISO e Abertura na fotografia de dentes e sorriso
+                Software proprietário D-Lux para calibração óptica e fotografia odontológica com difusores
               </p>
             </div>
           </div>
+
+          {/* Right Header: Store link & Tab mode */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-extrabold text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
+            >
+              <span>Loja D-Lux</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
 
           {/* View Mode Toggle (Desktop & Mobile) */}
           <div className="flex items-center gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800 text-xs font-medium">
@@ -94,6 +119,7 @@ export const DentalCameraApp: React.FC = () => {
               Visão Completa
             </button>
           </div>
+        </div>
         </div>
       </header>
 
@@ -135,18 +161,43 @@ export const DentalCameraApp: React.FC = () => {
           </div>
         </div>
 
-        {/* Educational Reference Footer for Dental Photography */}
-        <div className="mt-auto pt-6 border-t border-zinc-805 text-xs text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>
-              Configuração Padrão Ouro: <strong className="text-zinc-300">100mm Macro • 1/160s • ISO 100 • f/22 • Twin Flash</strong>
-            </span>
+        {/* Official D-Lux Proprietary Footer & Copyright */}
+        <footer className="mt-auto pt-6 border-t border-zinc-800 text-xs text-zinc-500 flex flex-col md:flex-row items-center justify-between gap-5">
+          <div className="flex items-center gap-3">
+            <a
+              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-100 opacity-80 transition-opacity"
+            >
+              <img src={DLUX_LOGO_BASE64} alt="D-Lux Diffuser" className="h-7 w-auto object-contain" />
+            </a>
+            <div>
+              <p className="text-zinc-200 font-bold">
+                © 2026 D-Lux Diffuser. Todos os direitos reservados.
+              </p>
+              <p className="text-[11px] text-zinc-400">
+                Aplicação proprietária desenvolvida para calibração, treinamento e fotografia macro odontológica.
+              </p>
+            </div>
           </div>
-          <div className="text-zinc-400 font-mono text-[11px]">
-            Simulador Didático Interativo com Astro + React
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 text-[11px] font-mono text-zinc-400">
+            <div className="flex items-center gap-1.5 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800">
+              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>Recomendado: <strong>100mm Macro + Difusor Twin D-Lux (Godox MF-12)</strong></span>
+            </div>
+            <a
+              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 flex items-center gap-1"
+            >
+              <span>dluxdiffuser.lojavirtualnuvem.com.br</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
-        </div>
+        </footer>
       </main>
 
       {/* Captured Photo Fullscreen / EXIF Modal */}

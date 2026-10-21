@@ -72,10 +72,10 @@ const htmlContent = `<!DOCTYPE html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simulador de Fotografia Macro Odontológica</title>
+    <title>D-Lux Diffuser | Simulador de Fotografia Macro Odontológica</title>
     <meta
       name="description"
-      content="Simulador interativo de câmera fotográfica macro para dentistas e fotografia odontológica. Funciona 100% offline dando 2 cliques."
+      content="Aplicação proprietária D-Lux Diffuser para simulação de fotografia macro odontológica e difusores clínicos. Funciona 100% offline dando 2 cliques."
     />
     <link rel="icon" type="image/svg+xml" href="${faviconDataUri}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
