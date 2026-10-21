@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 import { DentalCameraApp } from '../components/DentalCameraApp';
+
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -8,7 +10,7 @@ import { DentalCameraApp } from '../components/DentalCameraApp';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href={`${baseUrl}/favicon.ico`} />
     <title>D-Lux Diffuser | Simulador de Fotografia Macro Odontológica</title>
     <meta
       name="description"

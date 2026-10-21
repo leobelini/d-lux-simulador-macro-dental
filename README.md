@@ -38,6 +38,16 @@ npm run build
 npm run preview
 ```
 
+### 🚀 Publicação no GitHub Pages
+O projeto está configurado para publicação no GitHub Pages no endereço:
+**[https://leobelini.github.io/d-lux-simulador-macro-dental/](https://leobelini.github.io/d-lux-simulador-macro-dental/)**
+
+Para compilar e publicar na branch `gh-pages`:
+```bash
+npm run deploy
+```
+*Além disso, qualquer push na branch `main` dispara automaticamente o workflow do GitHub Actions (`.github/workflows/deploy.yml`).*
+
 ---
 
 ## 🎯 Funcionalidades Principais
