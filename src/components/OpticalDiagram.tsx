@@ -59,15 +59,15 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
   const patientTeethY = 135;
 
   return (
-    <div className="flex flex-col bg-zinc-900/90 rounded-2xl border border-zinc-800 p-4 shadow-xl">
-      <div className="flex items-center justify-between mb-3 border-b border-zinc-800 pb-2.5">
+    <div className="flex flex-col bg-[#16181f] rounded-xl border border-[#272a36] p-3 shadow-sm">
+      <div className="flex items-center justify-between mb-2.5 border-b border-[#232733] pb-2">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400">
-            <ArrowRightLeft className="w-4 h-4" />
+          <div className="p-1 rounded bg-[#232733] text-amber-400">
+            <ArrowRightLeft className="w-3.5 h-3.5" />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-white">Geometria Óptica & Distância de Trabalho</h3>
-            <p className="text-xs text-zinc-400">Simulação em tempo real da posição no consultório odontológico</p>
+            <h3 className="text-xs font-bold text-white">Geometria Óptica & Distância de Trabalho</h3>
+            <p className="text-[10px] text-zinc-400">Posição ergonômica da câmera em relação à boca do paciente</p>
           </div>
         </div>
 
@@ -372,25 +372,25 @@ export const OpticalDiagram: React.FC<OpticalDiagramProps> = ({ settings }) => {
       </div>
 
       {/* Clinical Optical Explanation Box */}
-      <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-        <div className="bg-zinc-950/60 p-2.5 rounded-xl border border-zinc-800/80">
-          <span className="font-semibold text-zinc-300 flex items-center gap-1.5 mb-1">
-            <Ruler className="w-3.5 h-3.5 text-cyan-400" />
+      <div className="mt-2.5 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+        <div className="bg-[#1b1d25] p-2 rounded-lg border border-[#272a36]">
+          <span className="font-semibold text-zinc-200 flex items-center gap-1.5 mb-0.5 text-[11px]">
+            <Ruler className="w-3 h-3 text-amber-400" />
             Distância de Trabalho ({lens.workingDistanceCm} cm):
           </span>
-          <p className="text-zinc-400 leading-relaxed">
+          <p className="text-zinc-400 text-[11px] leading-relaxed">
             {lens.clinicalAdvantage}
           </p>
         </div>
 
-        <div className="bg-zinc-950/60 p-2.5 rounded-xl border border-zinc-800/80">
-          <span className="font-semibold text-zinc-300 flex items-center gap-1.5 mb-1">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="bg-[#1b1d25] p-2 rounded-lg border border-[#272a36]">
+          <span className="font-semibold text-zinc-200 flex items-center gap-1.5 mb-0.5 text-[11px]">
+            <Sparkles className="w-3 h-3 text-emerald-400" />
             Profundidade de Campo (f/{aperture}):
           </span>
-          <p className="text-zinc-400 leading-relaxed">
+          <p className="text-zinc-400 text-[11px] leading-relaxed">
             {aperture >= 22
-              ? 'Abertura fechada em f/22 cobre incisivos e caninos com nitidez máxima no plano focal 1:1.'
+              ? 'Abertura f/22 cobre incisivos e caninos com nitidez máxima no plano focal 1:1.'
               : aperture <= 5.6
               ? 'Abertura muito aberta: apenas a face vestibular do incisivo central fica nítida (< 1.5mm).'
               : 'Abertura intermediária ideal para fotos estéticas do sorriso e lábios.'}

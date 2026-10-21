@@ -7,7 +7,7 @@ import { CameraControls } from './CameraControls';
 import { PresetSelector } from './PresetSelector';
 import { ClinicalFeedback } from './ClinicalFeedback';
 import { PhotoModal } from './PhotoModal';
-import { Camera, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import { DLUX_LOGO_BASE64 } from '../assets/dluxLogo';
 
 export const DentalCameraApp: React.FC = () => {
@@ -22,7 +22,7 @@ export const DentalCameraApp: React.FC = () => {
     whiteBalance: 'flash',
   });
 
-  const [activeTab, setActiveTab] = useState<'viewfinder' | 'diagram' | 'both'>('both');
+  const [activeTab, setActiveTab] = useState<'viewfinder' | 'diagram'>('viewfinder');
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState<boolean>(false);
 
   const diagnostics = evaluateDentalPhoto(settings);
@@ -39,159 +39,131 @@ export const DentalCameraApp: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#090c13] text-slate-100 flex flex-col font-sans selection:bg-amber-400 selection:text-black">
-      {/* Top Navigation Bar with D-Lux Official Brand */}
-      <header className="border-b border-zinc-800 bg-[#0d111a]/95 backdrop-blur-md sticky top-0 z-40 px-4 lg:px-8 py-3">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            {/* D-Lux Official Logo */}
-            <a
-              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center transition-transform hover:scale-105"
-              title="Acessar D-Lux Diffuser Oficial"
-            >
-              <img
-                src={DLUX_LOGO_BASE64}
-                alt="D-Lux Diffuser Logo"
-                className="h-9 sm:h-10 w-auto object-contain drop-shadow-[0_2px_8px_rgba(245,158,11,0.25)]"
-              />
-            </a>
-
-            <div className="border-l border-zinc-800 pl-3">
-              <div className="flex items-center gap-2">
-                <h1 className="text-base font-extrabold text-white tracking-tight">
-                  Simulador Macro Odontológico
-                </h1>
-                <span className="hidden sm:inline-block px-2 py-0.5 text-[9px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 rounded-full tracking-wider uppercase">
-                  D-LUX PROPRIETARY
-                </span>
-              </div>
-              <p className="text-xs text-zinc-400 hidden sm:block">
-                Software proprietário D-Lux para calibração óptica e fotografia odontológica com difusores
-              </p>
-            </div>
-          </div>
-
-          {/* Right Header: Store link & Tab mode */}
+    <div className="min-h-screen bg-[#0e1015] text-zinc-100 flex flex-col font-sans selection:bg-amber-400 selection:text-black">
+      {/* Top Header: Authentic Studio Equipment Console Bar */}
+      <header className="border-b border-[#252834] bg-[#14161e] sticky top-0 z-40 px-3 lg:px-6 py-2">
+        <div className="max-w-[1520px] mx-auto flex items-center justify-between gap-3">
+          {/* Brand & App Title */}
           <div className="flex items-center gap-3">
             <a
               href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-extrabold text-xs shadow-lg shadow-amber-500/20 transition-all cursor-pointer"
+              className="flex items-center hover:opacity-90 transition-opacity"
+              title="Acessar Loja Oficial D-Lux Diffuser"
             >
-              <span>Loja D-Lux</span>
-              <ExternalLink className="w-3.5 h-3.5" />
+              <img
+                src={DLUX_LOGO_BASE64}
+                alt="D-Lux Diffuser"
+                className="h-8 w-auto object-contain"
+              />
             </a>
 
-          {/* View Mode Toggle (Desktop & Mobile) */}
-          <div className="flex items-center gap-2 bg-zinc-900 p-1 rounded-xl border border-zinc-800 text-xs font-medium">
-            <button
-              onClick={() => setActiveTab('viewfinder')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === 'viewfinder'
-                  ? 'bg-cyan-600 text-white shadow font-semibold'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
-            >
-              Visor Câmera
-            </button>
-            <button
-              onClick={() => setActiveTab('diagram')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === 'diagram'
-                  ? 'bg-cyan-600 text-white shadow font-semibold'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
-            >
-              Distância Clínica
-            </button>
-            <button
-              onClick={() => setActiveTab('both')}
-              className={`hidden md:block px-3 py-1.5 rounded-lg transition-all ${
-                activeTab === 'both'
-                  ? 'bg-cyan-600 text-white shadow font-semibold'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
-            >
-              Visão Completa
-            </button>
+            <div className="border-l border-[#272a38] pl-2.5">
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm font-bold text-white tracking-tight">
+                  Simulador Macro Odontológico
+                </h1>
+                <span className="hidden sm:inline-block px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-amber-400/10 text-amber-300 border border-amber-400/30 uppercase">
+                  D-Lux Studio
+                </span>
+              </div>
+              <p className="text-[10px] text-zinc-400 hidden md:block">
+                Console óptico de calibração para fotografia odontológica e difusores
+              </p>
+            </div>
           </div>
-        </div>
+
+          {/* Right Header: View Mode Switcher + Store Link */}
+          <div className="flex items-center gap-2">
+            {/* View Mode Toggle */}
+            <div className="flex items-center bg-[#101217] p-0.5 rounded-lg border border-[#272a38] text-xs font-medium">
+              <button
+                onClick={() => setActiveTab('viewfinder')}
+                className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+                  activeTab === 'viewfinder'
+                    ? 'bg-zinc-200 text-black font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Visor da Câmera
+              </button>
+              <button
+                onClick={() => setActiveTab('diagram')}
+                className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+                  activeTab === 'diagram'
+                    ? 'bg-zinc-200 text-black font-bold shadow-sm'
+                    : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Distância Clínica
+              </button>
+            </div>
+
+            {/* Store Link */}
+            <a
+              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#20232e] hover:bg-[#282c3a] text-amber-300 border border-amber-400/30 text-xs font-semibold transition-colors"
+            >
+              <span>Loja D-Lux</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* Main Single-Screen Interactive Dashboard */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-6 flex flex-col gap-6">
-        {/* Quick Clinical Presets Strip (One-Click Scenarios) */}
+      {/* Main Studio Workstation: Compact Single-View Workspace */}
+      <main className="flex-1 max-w-[1520px] w-full mx-auto p-2.5 sm:p-4 flex flex-col gap-2.5">
+        {/* Horizontal Scenario Strip (100% visible on top) */}
         <PresetSelector currentSettings={settings} onSelectPreset={handleSelectPreset} />
 
-        {/* Core Interactive Section: Split View Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Visual Simulators (Viewfinder and/or Optical Clinic Diagram) */}
-          <div className="lg:col-span-7 flex flex-col gap-5">
-            {/* Camera Viewfinder */}
-            {(activeTab === 'viewfinder' || activeTab === 'both') && (
+        {/* 2-Column Balanced Cockpit */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
+          {/* Left Side: Visual Simulation + Immediate Clinical Evaluation (Stacked together) */}
+          <div className="lg:col-span-7 flex flex-col gap-2.5">
+            {/* Main Visual Display */}
+            {activeTab === 'viewfinder' ? (
               <CameraViewfinder
                 settings={settings}
                 diagnostics={diagnostics}
                 onUpdateSetting={updateSetting}
                 onTakePhoto={() => setIsPhotoModalOpen(true)}
               />
-            )}
-
-            {/* Optical Clinic Diagram */}
-            {(activeTab === 'diagram' || activeTab === 'both') && (
+            ) : (
               <OpticalDiagram settings={settings} />
             )}
+
+            {/* Immediate Diagnosis & Score: Right under the photo, zero scrolling! */}
+            <ClinicalFeedback diagnostics={diagnostics} />
           </div>
 
-          {/* Right Column: Physical Controls & Intelligent Feedback */}
-          <div className="lg:col-span-5 flex flex-col gap-5">
-            {/* The 3 Core Required Controls + Aperture & Flash */}
+          {/* Right Side: Camera Control Rack (Everything in view) */}
+          <div className="lg:col-span-5">
             <CameraControls
               settings={settings}
               onUpdateSetting={updateSetting}
             />
-
-            {/* Intelligent Clinical Photo Diagnosis */}
-            <ClinicalFeedback diagnostics={diagnostics} />
           </div>
         </div>
 
-        {/* Official D-Lux Proprietary Footer & Copyright */}
-        <footer className="mt-auto pt-6 border-t border-zinc-800 text-xs text-zinc-500 flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-center gap-3">
-            <a
-              href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-100 opacity-80 transition-opacity"
-            >
-              <img src={DLUX_LOGO_BASE64} alt="D-Lux Diffuser" className="h-7 w-auto object-contain" />
-            </a>
-            <div>
-              <p className="text-zinc-200 font-bold">
-                © 2026 D-Lux Diffuser. Todos os direitos reservados.
-              </p>
-              <p className="text-[11px] text-zinc-400">
-                Aplicação proprietária desenvolvida para calibração, treinamento e fotografia macro odontológica.
-              </p>
-            </div>
+        {/* Compact Footer */}
+        <footer className="mt-auto pt-2 border-t border-[#232733] text-[11px] text-zinc-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="text-zinc-300 font-semibold">© 2026 D-Lux Diffuser.</span>
+            <span>Aplicação proprietária para calibração óptica odontológica.</span>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-[11px] font-mono text-zinc-400">
-            <div className="flex items-center gap-1.5 bg-zinc-900/80 px-3 py-1.5 rounded-lg border border-zinc-800">
-              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-              <span>Recomendado: <strong>100mm Macro + Difusor Twin D-Lux (Godox MF-12)</strong></span>
-            </div>
+          <div className="flex items-center gap-3">
+            <span className="hidden md:inline text-zinc-400">
+              Padrão Ouro Recomendado: 100mm Macro + Difusor Twin D-Lux (MF-12)
+            </span>
             <a
               href="https://dluxdiffuser.lojavirtualnuvem.com.br/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-400 hover:text-amber-300 font-bold underline underline-offset-4 flex items-center gap-1"
+              className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1"
             >
               <span>dluxdiffuser.lojavirtualnuvem.com.br</span>
               <ExternalLink className="w-3 h-3" />
@@ -200,7 +172,7 @@ export const DentalCameraApp: React.FC = () => {
         </footer>
       </main>
 
-      {/* Captured Photo Fullscreen / EXIF Modal */}
+      {/* RAW Photo Capture Modal */}
       <PhotoModal
         isOpen={isPhotoModalOpen}
         onClose={() => setIsPhotoModalOpen(false)}

@@ -18,6 +18,7 @@ import {
   Aperture as ApertureIcon,
   Zap,
   Palette,
+  Sliders,
 } from 'lucide-react';
 
 interface CameraControlsProps {
@@ -40,32 +41,31 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-5 bg-zinc-900/90 rounded-2xl border border-zinc-800 p-5 shadow-xl">
-      <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
+    <div className="bg-[#16181f] border border-[#272a36] rounded-xl p-3.5 flex flex-col gap-3 shadow-sm">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-2 border-b border-[#232733]">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
-            <Camera className="w-4 h-4" />
-          </div>
-          <h2 className="text-base font-bold text-white tracking-wide">
-            Parâmetros da Câmera Macro
+          <Sliders className="w-4 h-4 text-amber-400" />
+          <h2 className="text-xs font-bold text-zinc-100 uppercase tracking-wider">
+            Painel de Controle Óptico
           </h2>
         </div>
-        <span className="text-xs font-mono text-zinc-400">Modo Manual [M]</span>
+        <span className="text-[11px] font-mono text-zinc-400">Modo Manual [M]</span>
       </div>
 
-      {/* 1. LENS FOCAL LENGTH (DISTÂNCIA FOCAL DA LENTE) */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <Camera className="w-3.5 h-3.5 text-cyan-400" />
-            1. Distância Focal da Lente Macro
-          </label>
-          <span className="text-xs font-mono font-bold text-cyan-400">
-            {LENS_SPECS[settings.focalLength].name}
+      {/* 1. LENTE MACRO */}
+      <div className="flex flex-col gap-1.5">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <Camera className="w-3.5 h-3.5 text-zinc-400" />
+            Lente Macro
+          </span>
+          <span className="font-mono text-amber-300 font-bold text-xs">
+            {settings.focalLength}mm ({LENS_SPECS[settings.focalLength].workingDistanceCm} cm dist.)
           </span>
         </div>
 
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5 font-mono text-xs">
           {FOCAL_LENGTHS.map((fl) => {
             const isSelected = settings.focalLength === fl;
             const isGold = fl === 100;
@@ -73,303 +73,275 @@ export const CameraControls: React.FC<CameraControlsProps> = ({
               <button
                 key={fl}
                 onClick={() => handleSelect('focalLength', fl)}
-                className={`relative flex flex-col items-center justify-center py-2.5 px-2 rounded-xl border font-mono transition-all duration-200 cursor-pointer ${
+                className={`flex items-center justify-center gap-1 py-1.5 px-2 rounded-md border transition-colors cursor-pointer ${
                   isSelected
-                    ? 'bg-cyan-500/20 text-cyan-200 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400'
-                    : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:border-zinc-700 hover:text-zinc-200'
+                    ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
                 }`}
               >
-                {isGold && (
-                  <span className="absolute -top-2 px-1.5 py-0.2 rounded-full text-[8px] font-bold bg-amber-500 text-black uppercase tracking-tight shadow">
-                    Padrão Ouro
-                  </span>
-                )}
-                <span className="text-sm font-bold">{fl}mm</span>
-                <span className="text-[10px] text-zinc-500 font-sans mt-0.5">
-                  {LENS_SPECS[fl].workingDistanceCm} cm dist.
-                </span>
+                <span>{fl}mm</span>
+                {isGold && !isSelected && <span className="text-amber-400 text-[10px]">★</span>}
               </button>
             );
           })}
         </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          💡 A lente 100mm é a preferida na odontologia por manter ~32cm de distância sem deformar o sorriso.
+        <p className="text-[10px] text-zinc-400">
+          {settings.focalLength === 100
+            ? '★ 100mm: Padrão Ouro mundial com distância ergonômica (~32cm) sem distorcer o sorriso.'
+            : settings.focalLength === 60
+            ? '⚠️ 60mm: Muito próximo (15cm) do paciente; projeta sombra da câmera e distorce dentes.'
+            : settings.focalLength === 85
+            ? '85mm: Ótimo para proporção facial e fotografia do sorriso/lábios.'
+            : '180mm: Tele-macro com distância estéril (55cm) para cirurgias periodontais.'}
         </p>
       </div>
 
-      {/* 2. SHUTTER SPEED (VELOCIDADE DO OBTURADOR) */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <Gauge className="w-3.5 h-3.5 text-amber-400" />
-            2. Velocidade do Obturador (Tempo de Exposição)
-          </label>
-          <span className="text-xs font-mono font-bold text-amber-400">
-            {settings.shutterSpeed} seg
+      {/* 2. ABERTURA (DIAFRAGMA) */}
+      <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <ApertureIcon className="w-3.5 h-3.5 text-zinc-400" />
+            Abertura (Profundidade de Campo)
           </span>
-        </div>
-
-        <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
-          {SHUTTER_SPEEDS.map((speed) => {
-            const isSelected = settings.shutterSpeed === speed;
-            const isSync = speed === '1/160' || speed === '1/200';
-            const isTooFast = speed === '1/500' || speed === '1/1000';
-            const isTooSlow = speed === '1/30';
-
-            return (
-              <button
-                key={speed}
-                onClick={() => handleSelect('shutterSpeed', speed)}
-                className={`relative flex flex-col items-center justify-center py-2 px-1 rounded-xl border font-mono text-xs transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400 font-bold'
-                    : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:border-zinc-700 hover:text-zinc-200'
-                }`}
-              >
-                {isSync && (
-                  <span className="absolute -top-1.5 px-1 py-0 rounded text-[7px] font-bold bg-emerald-500 text-black">
-                    SYNC
-                  </span>
-                )}
-                {isTooFast && (
-                  <span className="absolute -top-1.5 px-1 py-0 rounded text-[7px] font-bold bg-rose-500 text-white">
-                    FALHA
-                  </span>
-                )}
-                <span>{speed}</span>
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          ⚡ 1/160s a 1/200s é a velocidade de sincronismo ideal com flash. Acima de 1/250s surge a cortina preta!
-        </p>
-      </div>
-
-      {/* 3. ISO (SENSIBILIDADE DO SENSOR) */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <Sun className="w-3.5 h-3.5 text-yellow-400" />
-            3. Sensibilidade ISO (Ruído & Granulação)
-          </label>
-          <span className="text-xs font-mono font-bold text-yellow-400">
-            ISO {settings.iso}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-4 sm:grid-cols-7 gap-1.5">
-          {ISO_VALUES.map((isoVal) => {
-            const isSelected = settings.iso === isoVal;
-            const isIdeal = isoVal === 100;
-            const isHighNoise = isoVal >= 1600;
-
-            return (
-              <button
-                key={isoVal}
-                onClick={() => handleSelect('iso', isoVal)}
-                className={`relative flex flex-col items-center justify-center py-2 px-1 rounded-xl border font-mono text-xs transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? 'bg-yellow-500/20 text-yellow-200 border-yellow-400 shadow-[0_0_15px_rgba(234,179,8,0.25)] ring-1 ring-yellow-400 font-bold'
-                    : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:border-zinc-700 hover:text-zinc-200'
-                }`}
-              >
-                {isIdeal && (
-                  <span className="absolute -top-1.5 px-1 py-0 rounded text-[7px] font-bold bg-emerald-500 text-black">
-                    IDEAL
-                  </span>
-                )}
-                {isHighNoise && (
-                  <span className="absolute -top-1.5 px-1 py-0 rounded text-[7px] font-bold bg-rose-500/80 text-white">
-                    RUÍDO
-                  </span>
-                )}
-                <span>{isoVal}</span>
-              </button>
-            );
-          })}
-        </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          🔬 Em odontologia estética sempre usamos ISO 100 para visualizar periquimáceas e escala de cor sem ruído.
-        </p>
-      </div>
-
-      {/* 4. APERTURE (ABERTURA F-STOP / PROFUNDIDADE DE CAMPO) */}
-      <div className="flex flex-col gap-2 pt-1 border-t border-zinc-800/80">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <ApertureIcon className="w-3.5 h-3.5 text-emerald-400" />
-            4. Abertura do Diafragma (Profundidade de Campo)
-          </label>
-          <span className="text-xs font-mono font-bold text-emerald-400">
+          <span className="font-mono text-emerald-400 font-bold text-xs">
             f/{settings.aperture}
           </span>
         </div>
 
-        <div className="grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+        <div className="grid grid-cols-8 gap-1 font-mono text-xs">
           {APERTURES.map((fStop) => {
             const isSelected = settings.aperture === fStop;
-            const isDentalSweetSpot = fStop === 22;
-
+            const isGold = fStop === 22;
             return (
               <button
                 key={fStop}
                 onClick={() => handleSelect('aperture', fStop)}
-                className={`relative flex flex-col items-center justify-center py-2 px-1 rounded-xl border font-mono text-xs transition-all duration-200 cursor-pointer ${
+                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
                   isSelected
-                    ? 'bg-emerald-500/20 text-emerald-200 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)] ring-1 ring-emerald-400 font-bold'
-                    : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:border-zinc-700 hover:text-zinc-200'
+                    ? 'bg-emerald-400 text-black border-emerald-300 font-bold shadow-sm'
+                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
                 }`}
               >
-                {isDentalSweetSpot && (
-                  <span className="absolute -top-1.5 px-1 py-0 rounded text-[7px] font-bold bg-emerald-500 text-black">
-                    FOCO TOTAL
-                  </span>
-                )}
-                <span>f/{fStop}</span>
+                f/{fStop}
               </button>
             );
           })}
         </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          🎯 Em macro 1:1, f/22 garante que caninos e molares fiquem nítidos. Com f/2.8, a profundidade é &lt; 1mm.
+        <p className="text-[10px] text-zinc-400">
+          {settings.aperture >= 22
+            ? '★ f/22: Nitidez máxima cobrindo incisivos, caninos e molares simultaneamente.'
+            : settings.aperture <= 4
+            ? '⚠️ f/2.8 a f/4: Profundidade < 1mm; caninos e dentes vizinhos ficam totalmente borrados.'
+            : 'f/8 a f/16: Profundidade moderada, recomendada para retrato do sorriso.'}
         </p>
       </div>
 
-      {/* 5. FLASH ILUMINAÇÃO (TWIN / RING / AMBIENTE) */}
-      <div className="flex flex-col gap-2 pt-1 border-t border-zinc-800/80">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <Zap className="w-3.5 h-3.5 text-amber-400" />
-            5. Iluminação / Flash Odontológico
-          </label>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {/* Twin Flash + D-Lux Diffuser */}
-          <button
-            onClick={() => handleSelect('flashMode', 'twin')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.flashMode === 'twin'
-                ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Twin + D-Lux</span>
-            <span className="text-[10px] text-zinc-400">Difusor Twin MF-12</span>
-          </button>
-
-          {/* Flash de Estúdio / Bouncers D-Lux */}
-          <button
-            onClick={() => handleSelect('flashMode', 'studio')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.flashMode === 'studio'
-                ? 'bg-purple-500/20 text-purple-200 border-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.25)] ring-1 ring-purple-400'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Estúdio / Bouncers</span>
-            <span className="text-[10px] text-zinc-400">Softbox D-Lux</span>
-          </button>
-
-          {/* Ring Flash + Ring Diffuser D-Lux */}
-          <button
-            onClick={() => handleSelect('flashMode', 'ring')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.flashMode === 'ring'
-                ? 'bg-sky-500/20 text-sky-200 border-sky-400 shadow-[0_0_15px_rgba(14,165,233,0.25)] ring-1 ring-sky-400'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Ring + D-Lux</span>
-            <span className="text-[10px] text-zinc-400">Ring Diffuser YN-14</span>
-          </button>
-
-          {/* Off / Clinic Room Light */}
-          <button
-            onClick={() => handleSelect('flashMode', 'off')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.flashMode === 'off'
-                ? 'bg-rose-500/20 text-rose-200 border-rose-400 shadow'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Sem Flash</span>
-            <span className="text-[10px] text-zinc-400">Luz Consultório</span>
-          </button>
-        </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          💡 Os difusores D-Lux transformam a luz pontual dura em iluminação difusa tridimensional calibrada, ideal para fotografia de facetas, mamelos e periquimáceas.
-        </p>
-      </div>
-
-      {/* 6. BALANÇO DE BRANCO (WHITE BALANCE - WB / TEMPERATURA DE COR) */}
-      <div className="flex flex-col gap-2 pt-1 border-t border-zinc-800/80">
-        <div className="flex items-center justify-between">
-          <label className="flex items-center gap-1.5 text-xs font-bold text-zinc-200 uppercase tracking-wider">
-            <Palette className="w-3.5 h-3.5 text-amber-300" />
-            6. Balanço de Branco (WB / Cor da Fotografia)
-          </label>
-          <span className="text-xs font-mono font-bold text-amber-300">
-            {WB_SPECS[settings.whiteBalance].kelvin}
+      {/* 3. VELOCIDADE DO OBTURADOR */}
+      <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <Gauge className="w-3.5 h-3.5 text-zinc-400" />
+            Velocidade do Obturador
+          </span>
+          <span className="font-mono text-amber-300 font-bold text-xs">
+            {settings.shutterSpeed}s
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {/* Flash 5500K */}
-          <button
-            onClick={() => handleSelect('whiteBalance', 'flash')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.whiteBalance === 'flash'
-                ? 'bg-emerald-500/20 text-emerald-200 border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)] ring-1 ring-emerald-400 font-bold'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Flash 5500K</span>
-            <span className="text-[10px] text-zinc-400">Padrão Ouro (Neutro)</span>
-          </button>
+        <div className="grid grid-cols-8 gap-1 font-mono text-xs">
+          {SHUTTER_SPEEDS.map((speed) => {
+            const isSelected = settings.shutterSpeed === speed;
+            const isSync = speed === '1/160' || speed === '1/200';
+            const isCutoff = speed === '1/500' || speed === '1/1000';
+            return (
+              <button
+                key={speed}
+                onClick={() => handleSelect('shutterSpeed', speed)}
+                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
+                  isSelected
+                    ? isCutoff
+                      ? 'bg-rose-500 text-white border-rose-400 font-bold'
+                      : 'bg-zinc-100 text-black border-white font-bold shadow-sm'
+                    : isCutoff
+                    ? 'bg-[#20181b] text-rose-300/80 border-rose-900/40 hover:bg-rose-950/40'
+                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+                }`}
+              >
+                {speed}
+              </button>
+            );
+          })}
+        </div>
+        <p className="text-[10px] text-zinc-400">
+          {settings.shutterSpeed === '1/160' || settings.shutterSpeed === '1/200'
+            ? '★ 1/160s - 1/200s: Sincronismo oficial de flash; congela micro-tremores e bloqueia luz de consultório.'
+            : settings.shutterSpeed === '1/500' || settings.shutterSpeed === '1/1000'
+            ? '⚠️ Acima de 1/250s: Ultrapassa o sincronismo X-Sync e corta a foto com a faixa preta da cortina.'
+            : '1/30s - 1/60s: Lento demais sem flash; causa borrão de movimento e contamina com luz amarela.'}
+        </p>
+      </div>
 
-          {/* Cartão Cinza 18% */}
-          <button
-            onClick={() => handleSelect('whiteBalance', 'custom')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.whiteBalance === 'custom'
-                ? 'bg-cyan-500/20 text-cyan-200 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] ring-1 ring-cyan-400 font-bold'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Cinza 18%</span>
-            <span className="text-[10px] text-zinc-400">Calibrado Manual</span>
-          </button>
+      {/* 4. SENSIBILIDADE ISO */}
+      <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <Sun className="w-3.5 h-3.5 text-zinc-400" />
+            Sensibilidade ISO
+          </span>
+          <span className="font-mono text-zinc-100 font-bold text-xs">
+            ISO {settings.iso}
+          </span>
+        </div>
 
-          {/* Nublado 6500K */}
-          <button
-            onClick={() => handleSelect('whiteBalance', 'cloudy')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.whiteBalance === 'cloudy'
-                ? 'bg-amber-500/20 text-amber-200 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.25)] ring-1 ring-amber-400 font-bold'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
-            }`}
-          >
-            <span className="font-bold">Nublado 6500K</span>
-            <span className="text-[10px] text-zinc-400">Quente / Amarelado</span>
-          </button>
+        <div className="grid grid-cols-7 gap-1 font-mono text-xs">
+          {ISO_VALUES.map((isoVal) => {
+            const isSelected = settings.iso === isoVal;
+            const isIdeal = isoVal === 100;
+            const isHighNoise = isoVal >= 3200;
+            return (
+              <button
+                key={isoVal}
+                onClick={() => handleSelect('iso', isoVal)}
+                className={`py-1.5 px-0.5 rounded-md border text-center transition-colors cursor-pointer ${
+                  isSelected
+                    ? isHighNoise
+                      ? 'bg-rose-500 text-white border-rose-400 font-bold'
+                      : 'bg-zinc-100 text-black border-white font-bold shadow-sm'
+                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+                }`}
+              >
+                {isoVal}
+              </button>
+            );
+          })}
+        </div>
+        <p className="text-[10px] text-zinc-400">
+          {settings.iso === 100
+            ? '★ ISO 100: Ausência de ruído digital e máxima fidelidade de cor para análise de resinas e periquimáceas.'
+            : settings.iso >= 1600
+            ? '⚠️ ISO alto causa granulação severa que destrói detalhes da textura de esmalte e registro clínico.'
+            : 'ISO 200 a 800: Ruído aceitável, mas prefira sempre aumentar a potência do flash em vez do ISO.'}
+        </p>
+      </div>
 
-          {/* Tungstênio 3200K */}
+      {/* 5. ILUMINAÇÃO & DIFUSORES D-LUX */}
+      <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+            Iluminação & Difusor D-Lux
+          </span>
+          <span className="font-mono text-amber-300 font-bold text-xs">
+            {settings.flashMode === 'twin' && 'Twin Flash + Difusor D-Lux MF-12'}
+            {settings.flashMode === 'studio' && 'Estúdio + Bouncers / Softbox D-Lux'}
+            {settings.flashMode === 'ring' && 'Ring Flash + Difusor D-Lux YN-14'}
+            {settings.flashMode === 'off' && 'Sem Flash (Luz Ambiente)'}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
           <button
-            onClick={() => handleSelect('whiteBalance', 'tungsten')}
-            className={`flex flex-col items-center py-2.5 px-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
-              settings.whiteBalance === 'tungsten'
-                ? 'bg-blue-500/20 text-blue-200 border-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.25)] ring-1 ring-blue-400 font-bold'
-                : 'bg-zinc-950/70 text-zinc-400 border-zinc-800 hover:text-zinc-200'
+            onClick={() => handleSelect('flashMode', 'twin')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.flashMode === 'twin'
+                ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
             }`}
           >
-            <span className="font-bold">Tungstênio 3200K</span>
-            <span className="text-[10px] text-zinc-400">Frio / Azulado</span>
+            Twin + D-Lux MF-12
+          </button>
+          <button
+            onClick={() => handleSelect('flashMode', 'studio')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.flashMode === 'studio'
+                ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Estúdio / Bouncers
+          </button>
+          <button
+            onClick={() => handleSelect('flashMode', 'ring')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.flashMode === 'ring'
+                ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Ring + D-Lux YN-14
+          </button>
+          <button
+            onClick={() => handleSelect('flashMode', 'off')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.flashMode === 'off'
+                ? 'bg-rose-500 text-white border-rose-400 font-bold'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Sem Flash (Ambiente)
           </button>
         </div>
-        <p className="text-[11px] text-zinc-400 italic">
-          🎨 {WB_SPECS[settings.whiteBalance].description}
+        <p className="text-[10px] text-zinc-400">
+          Difusores D-Lux suavizam a luz estroboscópica pontual, gerando reflexos lineares e destacando a tridimensionalidade vestibular.
+        </p>
+      </div>
+
+      {/* 6. BALANÇO DE BRANCO (WB) */}
+      <div className="flex flex-col gap-1.5 pt-2 border-t border-[#232733]">
+        <div className="flex items-center justify-between text-xs">
+          <span className="font-semibold text-zinc-300 flex items-center gap-1.5">
+            <Palette className="w-3.5 h-3.5 text-zinc-400" />
+            Balanço de Branco (WB)
+          </span>
+          <span className="font-mono text-zinc-100 font-bold text-xs">
+            {WB_SPECS[settings.whiteBalance].label} ({WB_SPECS[settings.whiteBalance].kelvin})
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
+          <button
+            onClick={() => handleSelect('whiteBalance', 'flash')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.whiteBalance === 'flash'
+                ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Flash 5500K ★
+          </button>
+          <button
+            onClick={() => handleSelect('whiteBalance', 'custom')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.whiteBalance === 'custom'
+                ? 'bg-zinc-100 text-black border-white font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Cinza 18%
+          </button>
+          <button
+            onClick={() => handleSelect('whiteBalance', 'cloudy')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.whiteBalance === 'cloudy'
+                ? 'bg-zinc-100 text-black border-white font-bold shadow-sm'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Nublado 6500K
+          </button>
+          <button
+            onClick={() => handleSelect('whiteBalance', 'tungsten')}
+            className={`py-1.5 px-2 rounded-md border text-center transition-colors cursor-pointer ${
+              settings.whiteBalance === 'tungsten'
+                ? 'bg-blue-500 text-white border-blue-400 font-bold'
+                : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
+            }`}
+          >
+            Tungstênio 3200K
+          </button>
+        </div>
+        <p className="text-[10px] text-zinc-400">
+          5500K é a temperatura oficial odontológica para correta estratificação de cerâmicas e resinas na escala VITA.
         </p>
       </div>
     </div>

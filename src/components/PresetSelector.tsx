@@ -2,7 +2,7 @@ import React from 'react';
 import { type Preset, type CameraSettings } from '../types/camera';
 import { CLINICAL_PRESETS } from '../data/presets';
 import { sounds } from '../utils/soundEffects';
-import { Bookmark, Check } from 'lucide-react';
+import { Check, Sparkles, AlertCircle } from 'lucide-react';
 
 interface PresetSelectorProps {
   currentSettings: CameraSettings;
@@ -18,7 +18,6 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
     onSelectPreset(preset.settings);
   };
 
-  // Verifica se todos os parâmetros da câmera batem exatamente com as configurações do preset
   const isPresetActive = (preset: Preset) => {
     const p = preset.settings;
     const c = currentSettings;
@@ -34,103 +33,107 @@ export const PresetSelector: React.FC<PresetSelectorProps> = ({
   };
 
   const activePreset = CLINICAL_PRESETS.find(isPresetActive);
+  const clinicalProtocols = CLINICAL_PRESETS.filter((p) => p.tag !== 'Erro Comum');
+  const clinicalErrors = CLINICAL_PRESETS.filter((p) => p.tag === 'Erro Comum');
 
   return (
-    <div className="flex flex-col gap-3 bg-zinc-900/90 rounded-2xl border border-zinc-800 p-5 shadow-xl">
-      <div className="flex items-center justify-between border-b border-zinc-800 pb-2.5">
-        <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400">
-            <Bookmark className="w-4 h-4" />
+    <div className="bg-[#16181f] border border-[#272a36] rounded-xl px-3 py-2 flex flex-col gap-1.5 shadow-sm">
+      {/* Horizontal Strip of Presets */}
+      <div className="flex items-center justify-between gap-3 flex-wrap xl:flex-nowrap">
+        {/* Left: Recommended Protocols */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1 text-[11px] font-semibold text-zinc-400 mr-1 shrink-0">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>Protocolos:</span>
           </div>
-          <div>
-            <h3 className="text-sm font-bold text-white">
-              Cenários Clínicos & Erros Comuns
-            </h3>
-            <p className="text-[11px] text-zinc-400 mt-0.5">
-              {activePreset ? (
-                <span className="text-cyan-400 flex items-center gap-1.5 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                  Cenário Ativo: <strong className="text-white">{activePreset.name}</strong>
-                </span>
-              ) : (
-                <span className="text-zinc-500">
-                  Configuração Manual (ajuste livre dos parâmetros)
-                </span>
-              )}
-            </p>
-          </div>
-        </div>
-        <span className="text-[11px] text-zinc-400 hidden sm:inline-block">1-Clique para Simular</span>
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-        {CLINICAL_PRESETS.map((preset) => {
-          const isError = preset.tag === 'Erro Comum';
-          const isGold = preset.id === 'gold-standard';
-          const isActive = isPresetActive(preset);
+          {clinicalProtocols.map((preset) => {
+            const isActive = isPresetActive(preset);
+            const isGold = preset.id === 'gold-standard';
 
-          return (
-            <button
-              key={preset.id}
-              onClick={() => handleApply(preset)}
-              className={`relative flex flex-col justify-between text-left p-3.5 rounded-xl border transition-all duration-200 cursor-pointer group ${
-                isActive
-                  ? 'bg-cyan-950/40 border-cyan-400 ring-2 ring-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.35)] scale-[1.01]'
-                  : isGold
-                  ? 'bg-emerald-950/20 border-emerald-500/40 hover:border-emerald-400 hover:bg-emerald-950/40'
-                  : isError
-                  ? 'bg-rose-950/20 border-rose-500/30 hover:border-rose-400 hover:bg-rose-950/40'
-                  : 'bg-zinc-950/60 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900'
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span
-                    className={`text-[9px] font-mono uppercase font-bold px-2 py-0.5 rounded-full border ${preset.badgeColor}`}
-                  >
-                    {preset.tag}
-                  </span>
-
-                  {isActive ? (
-                    <span className="flex items-center gap-1 text-[9px] font-mono font-bold uppercase px-2 py-0.5 rounded-full bg-cyan-400 text-black shadow">
-                      <Check className="w-2.5 h-2.5 stroke-[3]" />
-                      Ativo
-                    </span>
-                  ) : (
-                    <span className="text-[10px] font-mono text-zinc-400 whitespace-nowrap">
-                      {preset.settings.focalLength}mm • f/{preset.settings.aperture}
-                    </span>
-                  )}
-                </div>
-
-                <h4
-                  className={`text-xs font-bold transition-colors mb-1.5 leading-snug ${
-                    isActive ? 'text-cyan-300 font-extrabold' : 'text-zinc-100 group-hover:text-cyan-300'
-                  }`}
-                >
-                  {preset.name}
-                </h4>
-
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  {preset.description}
-                </p>
-              </div>
-
-              <div
-                className={`mt-3 pt-2 border-t flex items-center justify-between text-[10px] font-mono transition-colors ${
+            return (
+              <button
+                key={preset.id}
+                onClick={() => handleApply(preset)}
+                title={`${preset.name}: ${preset.description}`}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer border ${
                   isActive
-                    ? 'border-cyan-500/30 text-cyan-300 font-bold'
-                    : 'border-white/5 text-zinc-500 group-hover:text-cyan-400'
+                    ? 'bg-amber-400 text-black border-amber-300 font-bold shadow-sm'
+                    : isGold
+                    ? 'bg-[#1e222d] text-zinc-200 border-amber-500/40 hover:border-amber-400 hover:text-white'
+                    : 'bg-[#1b1d25] text-zinc-300 border-[#2a2e3c] hover:bg-[#232733] hover:text-white'
                 }`}
               >
-                <span>{preset.settings.shutterSpeed}s • ISO {preset.settings.iso}</span>
-                <span className="text-[9px] font-sans font-semibold">
-                  {isActive ? '✓ Em Uso' : 'Aplicar →'}
+                {isActive && <Check className="w-3 h-3 stroke-[3]" />}
+                <span>{preset.name.split(':')[0].replace('Padrão Ouro', 'Padrão Ouro 1:1')}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Divider on large screens */}
+        <div className="hidden xl:block h-4 w-px bg-zinc-700/60 shrink-0"></div>
+
+        {/* Right: Common Mistakes / Errors */}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="flex items-center gap-1 text-[11px] font-semibold text-zinc-400 mr-1 shrink-0">
+            <AlertCircle className="w-3.5 h-3.5 text-rose-400" />
+            <span>Erros Típicos:</span>
+          </div>
+
+          {clinicalErrors.map((preset) => {
+            const isActive = isPresetActive(preset);
+
+            return (
+              <button
+                key={preset.id}
+                onClick={() => handleApply(preset)}
+                title={`${preset.name}: ${preset.description}`}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer border ${
+                  isActive
+                    ? 'bg-rose-500 text-white border-rose-400 font-bold shadow-sm'
+                    : 'bg-[#1c1820] text-rose-200/80 border-rose-900/40 hover:bg-rose-950/40 hover:text-rose-100 hover:border-rose-700/60'
+                }`}
+              >
+                {isActive && <Check className="w-3 h-3 stroke-[3]" />}
+                <span>
+                  {preset.name
+                    .replace('⚠️ Erro Comum: ', '')
+                    .replace('Faixa Preta do Obturador', 'Cortina (1/1000s)')
+                    .replace('Tremor & Luz de Teto Amarela', 'Tremor (1/30s)')
+                    .replace('Foco Raso Demais (f/2.8)', 'Foco Raso (f/2.8)')
+                    .replace('WB Incorreto (Tungstênio Frio)', 'WB Incorreto (3200K)')}
                 </span>
-              </div>
-            </button>
-          );
-        })}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 1-Line Description Context Bar */}
+      <div className="flex items-center justify-between text-[11px] text-zinc-400 border-t border-[#232733] pt-1">
+        <div className="truncate flex items-center gap-1.5">
+          {activePreset ? (
+            <>
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
+              <span className="font-semibold text-zinc-200">{activePreset.name}:</span>
+              <span className="text-zinc-400 truncate">{activePreset.description}</span>
+            </>
+          ) : (
+            <>
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-500 shrink-0"></span>
+              <span className="text-zinc-400">
+                Ajuste Manual Personalizado — altere os parâmetros abaixo para simular os efeitos em tempo real.
+              </span>
+            </>
+          )}
+        </div>
+
+        {activePreset && (
+          <span className="hidden md:inline-block font-mono text-[10px] text-amber-300/90 shrink-0 pl-2">
+            {activePreset.settings.focalLength}mm • f/{activePreset.settings.aperture} • {activePreset.settings.shutterSpeed}s • ISO {activePreset.settings.iso}
+          </span>
+        )}
       </div>
     </div>
   );

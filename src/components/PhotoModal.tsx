@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { type CameraSettings, LENS_SPECS, WB_SPECS } from '../types/camera';
 import { type PhotoDiagnostics } from '../utils/clinicalPhysics';
 import { DentalSubjectCanvas } from './DentalSubjectCanvas';
-import confetti from 'canvas-confetti';
-import { X, Award, ExternalLink } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import { DLUX_LOGO_BASE64 } from '../assets/dluxLogo';
 
 interface PhotoModalProps {
@@ -19,28 +18,13 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({
   settings,
   diagnostics,
 }) => {
-  useEffect(() => {
-    if (isOpen && diagnostics.clinicalScore >= 85) {
-      try {
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.6 },
-          colors: ['#10b981', '#38bdf8', '#fbbf24'],
-        });
-      } catch (e) {
-        // ignore if not supported
-      }
-    }
-  }, [isOpen, diagnostics.clinicalScore]);
-
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative flex flex-col w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+      <div className="relative flex flex-col w-full max-w-4xl bg-[#12141a] border border-[#272a36] rounded-xl shadow-xl overflow-hidden max-h-[92vh]">
         {/* Header with D-Lux Branding */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800 bg-zinc-900/95">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#232733] bg-[#161820]">
           <div className="flex items-center gap-3">
             <img src={DLUX_LOGO_BASE64} alt="D-Lux Diffuser" className="h-7 w-auto object-contain" />
             <div className="border-l border-zinc-800 pl-3">
